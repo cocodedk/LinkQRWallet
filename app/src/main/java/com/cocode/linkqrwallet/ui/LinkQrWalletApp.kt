@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.cocode.linkqrwallet.LinkQrWalletApp
 import com.cocode.linkqrwallet.ui.screens.AddLinkScreen
+import com.cocode.linkqrwallet.ui.screens.AboutScreen
 import com.cocode.linkqrwallet.ui.screens.DetailScreen
 import com.cocode.linkqrwallet.ui.screens.LibraryScreen
 import com.cocode.linkqrwallet.ui.screens.ScanQrScreen
@@ -43,6 +44,7 @@ fun LinkQrWalletRoot(sharedUrl: String?) {
                 viewModelFactory = viewModelFactory,
                 onAdd = { navController.navigate("add") },
                 onScan = { navController.navigate("scan") },
+                onAbout = { navController.navigate("about") },
                 onOpenDetail = { id -> navController.navigate("detail/$id") }
             )
         }
@@ -85,6 +87,11 @@ fun LinkQrWalletRoot(sharedUrl: String?) {
                     }
                 },
                 onClose = { navController.popBackStack() }
+            )
+        }
+        composable("about") {
+            AboutScreen(
+                onBack = { navController.popBackStack() }
             )
         }
     }

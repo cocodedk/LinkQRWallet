@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.Sort
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -55,6 +56,7 @@ fun LibraryScreen(
     viewModelFactory: AppViewModelFactory,
     onAdd: () -> Unit,
     onScan: () -> Unit,
+    onAbout: () -> Unit,
     onOpenDetail: (Long) -> Unit
 ) {
     val viewModel: LibraryViewModel = viewModel(factory = viewModelFactory)
@@ -83,6 +85,12 @@ fun LibraryScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Sort,
                             contentDescription = "Sort"
+                        )
+                    }
+                    IconButton(onClick = onAbout) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = "About"
                         )
                     }
                     DropdownMenu(
