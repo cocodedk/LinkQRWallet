@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.cocode.linkqrwallet.data.LinkItem
 import com.cocode.linkqrwallet.data.LinkRepository
 import com.cocode.linkqrwallet.data.SortOption
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class LibraryViewModel(
     private val repository: LinkRepository
 ) : ViewModel() {
