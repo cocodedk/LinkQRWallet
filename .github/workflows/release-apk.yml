@@ -1,7 +1,12 @@
-name: Build APK
+name: Release APK
 
 on:
   workflow_dispatch:
+    inputs:
+      release_type:
+        description: "Version bump (patch, minor, major)"
+        required: false
+        default: "patch"
   push:
     tags:
       - "v*"
@@ -10,7 +15,85 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  bump-version:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump version
+        id: bump
+        run: |
+          python - <<'PY'
+          import re
+          import sys
+
+          path = "app/build.gradle.kts"
+          data = open(path, "r", encoding="utf-8").read()
+
+          code_match = re.search(r"versionCode\\s*=\\s*(\\d+)", data)
+          name_match = re.search(r'versionName\\s*=\\s*"(.*?)"', data)
+          if not code_match or not name_match:
+              print("Version fields not found", file=sys.stderr)
+              sys.exit(1)
+
+          version_code = int(code_match.group(1))
+          version_name = name_match.group(1)
+
+          parts = version_name.split(".")
+          if len(parts) == 2:
+              major, minor = parts
+              patch = "0"
+          elif len(parts) == 3:
+              major, minor, patch = parts
+          else:
+              print("Unsupported version format: " + version_name, file=sys.stderr)
+              sys.exit(1)
+
+          bump = "${{ github.event.inputs.release_type }}".strip().lower() or "patch"
+          major_i, minor_i, patch_i = int(major), int(minor), int(patch)
+          if bump == "major":
+              major_i += 1
+              minor_i = 0
+              patch_i = 0
+          elif bump == "minor":
+              minor_i += 1
+              patch_i = 0
+          else:
+              patch_i += 1
+
+          new_name = f"{major_i}.{minor_i}.{patch_i}"
+          new_code = version_code + 1
+
+          data = re.sub(r"versionCode\\s*=\\s*\\d+", f"versionCode = {new_code}", data)
+          data = re.sub(r'versionName\\s*=\\s*".*?"', f'versionName = "{new_name}"', data)
+          open(path, "w", encoding="utf-8").write(data)
+
+          print(f"version_name={new_name}")
+          print(f"version_code={new_code}")
+          PY
+
+      - name: Commit and tag
+        run: |
+          VERSION_NAME=$(python - <<'PY'
+          import re
+          data = open("app/build.gradle.kts", "r", encoding="utf-8").read()
+          match = re.search(r'versionName\\s*=\\s*"(.*?)"', data)
+          print(match.group(1))
+          PY
+          )
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app/build.gradle.kts
+          git commit -m "Bump version to ${VERSION_NAME}"
+          git tag "v${VERSION_NAME}"
+          git push origin main --tags
+
+  build-release:
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,17 +109,7 @@ jobs:
       - name: Build APKs
         run: ./gradlew assembleDebug assembleRelease
 
-      - name: Upload artifacts (workflow dispatch)
-        if: github.event_name == 'workflow_dispatch'
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-builds
-          path: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/app-release.apk
-
       - name: Publish release assets
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
