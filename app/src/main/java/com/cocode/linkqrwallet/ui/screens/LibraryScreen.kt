@@ -3,6 +3,7 @@ package com.cocode.linkqrwallet.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -53,6 +54,7 @@ import java.util.Date
 fun LibraryScreen(
     viewModelFactory: AppViewModelFactory,
     onAdd: () -> Unit,
+    onScan: () -> Unit,
     onOpenDetail: (Long) -> Unit
 ) {
     val viewModel: LibraryViewModel = viewModel(factory = viewModelFactory)
@@ -60,6 +62,7 @@ fun LibraryScreen(
     val links by viewModel.links.collectAsState()
     val sortOption by viewModel.currentSort.collectAsState()
     var showSortMenu by remember { mutableStateOf(false) }
+    var showFabMenu by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -100,11 +103,32 @@ fun LibraryScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onAdd) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add link"
-                )
+            Box {
+                FloatingActionButton(onClick = { showFabMenu = true }) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add options"
+                    )
+                }
+                DropdownMenu(
+                    expanded = showFabMenu,
+                    onDismissRequest = { showFabMenu = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Add Link") },
+                        onClick = {
+                            showFabMenu = false
+                            onAdd()
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Scan QR") },
+                        onClick = {
+                            showFabMenu = false
+                            onScan()
+                        }
+                    )
+                }
             }
         }
     ) { padding ->

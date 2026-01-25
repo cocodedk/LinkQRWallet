@@ -18,6 +18,7 @@ import com.cocode.linkqrwallet.LinkQrWalletApp
 import com.cocode.linkqrwallet.ui.screens.AddLinkScreen
 import com.cocode.linkqrwallet.ui.screens.DetailScreen
 import com.cocode.linkqrwallet.ui.screens.LibraryScreen
+import com.cocode.linkqrwallet.ui.screens.ScanQrScreen
 import com.cocode.linkqrwallet.ui.viewmodel.AppViewModelFactory
 
 @Composable
@@ -41,6 +42,7 @@ fun LinkQrWalletRoot(sharedUrl: String?) {
             LibraryScreen(
                 viewModelFactory = viewModelFactory,
                 onAdd = { navController.navigate("add") },
+                onScan = { navController.navigate("scan") },
                 onOpenDetail = { id -> navController.navigate("detail/$id") }
             )
         }
@@ -72,6 +74,17 @@ fun LinkQrWalletRoot(sharedUrl: String?) {
                 viewModelFactory = viewModelFactory,
                 linkId = id,
                 onBack = { navController.popBackStack() }
+            )
+        }
+        composable("scan") {
+            ScanQrScreen(
+                onResult = { result ->
+                    val encoded = Uri.encode(result)
+                    navController.navigate("add?url=$encoded") {
+                        popUpTo("library")
+                    }
+                },
+                onClose = { navController.popBackStack() }
             )
         }
     }

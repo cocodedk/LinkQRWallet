@@ -6,6 +6,7 @@ import com.cocode.linkqrwallet.data.LinkItem
 import com.cocode.linkqrwallet.data.LinkRepository
 import com.cocode.linkqrwallet.data.TitleFetcher
 import com.cocode.linkqrwallet.data.UrlUtils
+import com.cocode.linkqrwallet.data.UrlSafety
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -82,6 +83,11 @@ class AddLinkViewModel(
         val normalized = state.value.normalizedUrl
         if (normalized == null) {
             state.value = state.value.copy(errorMessage = "Enter a valid URL.")
+            return
+        }
+        val safety = UrlSafety.check(normalized)
+        if (!safety.isSafe) {
+            state.value = state.value.copy(errorMessage = safety.reason ?: "URL blocked for safety.")
             return
         }
         val currentTitle = state.value.title.ifBlank { UrlUtils.domainFromUrl(normalized) }

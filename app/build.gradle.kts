@@ -34,6 +34,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        languageVersion = "1.9"
+        allWarningsAsErrors = true
     }
     buildFeatures {
         compose = true
@@ -46,6 +48,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
@@ -61,6 +64,11 @@ dependencies {
     implementation(libs.jsoup)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.zxing.core)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.mlkit.barcode)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
