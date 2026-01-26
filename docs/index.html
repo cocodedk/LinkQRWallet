@@ -80,6 +80,30 @@
         font-size: 0.95rem;
         background: white;
       }
+      .cta-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .cta-primary {
+        background: #1c1a1f;
+        color: #fff;
+      }
+      .cta-secondary {
+        border: 1px solid rgba(27, 27, 27, 0.18);
+        color: var(--text);
+        background: #fff2e4;
+      }
       .footer {
         margin-top: 48px;
         font-size: 0.9rem;
@@ -119,12 +143,14 @@
             capture a QR, fetch the page title, and keep your collection searchable,
             sortable, and offline-ready.
           </p>
-          <p style="margin-top: 8px;">
-            <a href="https://github.com/cocodedk/LinkQRWallet"
-               style="display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#1c1a1f;color:#fff;text-decoration:none;font-weight:600;">
+          <div class="cta-group">
+            <a class="cta cta-primary" href="https://github.com/cocodedk/LinkQRWallet">
               View on GitHub
             </a>
-          </p>
+            <a class="cta cta-secondary" href="https://github.com/cocodedk/LinkQRWallet/releases/latest">
+              Latest release
+            </a>
+          </div>
           <div class="grid">
             <div class="pill">Instant QR capture</div>
             <div class="pill">Automatic title fetch</div>
