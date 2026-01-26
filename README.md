@@ -9,6 +9,9 @@ Link QR Wallet is a personal Android app that turns URLs into QR codes and store
 - Share QR images and open links quickly
 - Local database (offline-first)
 
+## Security & privacy
+Link QR Wallet is a secure app that does not send your data anywhere and does not use more services than it needs. The only permissions used are the camera for scanning QR codes and network access for reading webpage titles.
+
 ## Build
 ```bash
 ./gradlew assembleDebug
