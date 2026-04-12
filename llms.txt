@@ -1,0 +1,38 @@
+# Link QR Wallet
+
+> Android app that turns URLs into QR codes and stores them in a searchable, sortable offline library.
+
+## What it does
+
+Link QR Wallet lets users save links as QR codes for quick access. Add a URL and the app auto-fetches the page title; a QR code is generated and stored locally. Users can search and sort their library, scan existing QR codes to import them, and share QR images. Everything is stored offline — no account or cloud sync required.
+
+## Key features
+
+- Add links with auto-fetched page titles
+- Generate and display QR codes for any URL
+- QR scanner to import existing codes (CameraX + ML Kit)
+- Search and sort by title, domain, or date
+- Share QR images via Android share intent
+- Local database (Room/SQLite), fully offline-first
+- No account, no cloud, no tracking
+
+## Architecture
+
+- Language: Kotlin
+- Framework: Jetpack Compose, Room, CameraX, ML Kit, ZXing
+- Architecture: Clean Architecture + MVVM
+- Build tool: Gradle (Kotlin DSL)
+- Min SDK: Android 7.0 (API 24)
+
+## Repository
+
+- GitHub: https://github.com/cocodedk/LinkQRWallet
+- Website: https://cocodedk.github.io/LinkQRWallet/
+
+## Author
+
+Babak Bandpey — https://cocode.dk | https://linkedin.com/in/babakbandpey | https://github.com/cocodedk
+
+## License
+
+Apache-2.0

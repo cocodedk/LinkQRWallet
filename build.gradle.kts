@@ -4,3 +4,9 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
 }
+
+tasks.register("buildSmoke") {
+    group = "verification"
+    description = "Build debug, run unit tests, and lint."
+    dependsOn(":app:assembleDebug", ":app:testDebugUnitTest", ":app:lintDebug")
+}
