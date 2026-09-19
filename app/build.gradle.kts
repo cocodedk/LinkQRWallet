@@ -66,7 +66,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // F-Droid's reviewer rejects release builds shipped with minification off
+            // for no reason (fdroiddata !49432) -- shrinking also cuts APK size.
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
