@@ -10,6 +10,8 @@ on:
         description: "Version bump (patch, minor, major)"
         required: false
         default: "patch"
+        type: choice
+        options: [patch, minor, major]
 
 # Serialize rather than cancel: the next version is derived from the newest tag, so two
 # concurrent runs would both read the same one and try to release the same version.
@@ -36,6 +38,8 @@ jobs:
 
       - name: Compute next version
         id: version
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release_type }}
         run: |
           # --sort=-version:refname, because a lexical sort puts v0.9.0 above v0.10.0.
           LATEST=$(git tag --list 'v*' --sort=-version:refname | head -1)
@@ -43,7 +47,7 @@ jobs:
           VERSION="${LATEST#v}"
           [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "Cannot parse tag: $LATEST"; exit 1; }
           MAJOR="${BASH_REMATCH[1]}"; MINOR="${BASH_REMATCH[2]}"; PATCH="${BASH_REMATCH[3]}"
-          BUMP="${{ github.event.inputs.release_type }}"
+          BUMP="$RELEASE_TYPE"
           [ -z "$BUMP" ] && BUMP="patch"
           case "$BUMP" in
             major) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0 ;;
