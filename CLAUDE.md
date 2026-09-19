@@ -91,6 +91,7 @@ LinkQRWallet/
 ./gradlew lintDebug               # Run lint checks
 ./gradlew buildSmoke              # Full smoke check (build + tests + lint) — used in CI and pre-commit
 ./gradlew assembleRelease         # Build release APK
+gh workflow run release-apk.yml   # after a PR bumps VERSION_NAME/VERSION_CODE in gradle.properties
 ```
 
 ---
@@ -100,7 +101,8 @@ LinkQRWallet/
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | This file — project conventions and session startup |
-| `app/build.gradle.kts` | App module build config with version |
+| `app/build.gradle.kts` | App module build config |
+| `gradle.properties` | Also where `VERSION_NAME`/`VERSION_CODE` live — bump both in the PR before a release |
 | `.github/workflows/ci.yml` | CI on PRs and branches |
 | `.github/workflows/release-apk.yml` | Signed release builds + GitHub Releases |
 | `.github/workflows/pages.yml` | GitHub Pages deployment |
