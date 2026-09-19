@@ -77,6 +77,8 @@ fun ScanQrScreen(
         onDispose {
             cameraProvider?.unbindAll()
             cameraExecutor.shutdown()
+            // A decode posted just before the user left must not navigate from a dead screen.
+            mainHandler.removeCallbacksAndMessages(null)
         }
     }
 
