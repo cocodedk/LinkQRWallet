@@ -11,6 +11,16 @@ tasks.withType<Test>().configureEach {
     failFast = true
 }
 
+// Signing material only ever arrives through the environment. A missing keystore
+// is not an error — it just means this is a local build, which stays unsigned.
+val keystorePath = System.getenv("KEYSTORE_PATH")?.takeIf { it.isNotBlank() }
+val keystorePassword = System.getenv("KEYSTORE_PASSWORD")?.takeIf { it.isNotBlank() }
+val keyAliasEnv = System.getenv("KEY_ALIAS")?.takeIf { it.isNotBlank() }
+val keyPasswordEnv = System.getenv("KEY_PASSWORD")?.takeIf { it.isNotBlank() }
+val keystoreFile = keystorePath?.let { rootProject.file(it).absoluteFile }?.takeIf { it.isFile }
+val hasSigningConfig = keystoreFile != null && keystorePassword != null &&
+    keyAliasEnv != null && keyPasswordEnv != null
+
 android {
     namespace = "com.cocode.linkqrwallet"
     compileSdk = 36
@@ -25,6 +35,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (hasSigningConfig) {
+            create("release") {
+                storeFile = keystoreFile
+                storePassword = keystorePassword
+                keyAlias = keyAliasEnv
+                keyPassword = keyPasswordEnv
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,6 +53,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (hasSigningConfig) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {
@@ -49,6 +73,13 @@ android {
     }
     lint {
         baseline = file("lint-baseline.xml")
+    }
+
+    // AGP otherwise adds a Google-encrypted dependency list to the APK signing
+    // block, and F-Droid rejects any release APK that carries it.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 }
 

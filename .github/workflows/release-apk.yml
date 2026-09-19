@@ -95,8 +95,37 @@ jobs:
           git tag "v${VERSION_NAME}"
           git push origin main --tags
 
-      - name: Build APKs
-        run: ./gradlew assembleDebug assembleRelease
+      - name: Decode and verify keystore
+        # Through env, not ${{ }}: interpolation splices the secret's *value* into the
+        # shell source, so a password containing $ or a backtick would be expanded
+        # before the check ran.
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > release.keystore
+          keytool -list -keystore release.keystore -alias "$KEY_ALIAS" \
+              -storepass "$KEYSTORE_PASSWORD" >/dev/null
+
+      - name: Build signed release APK
+        env:
+          KEYSTORE_PATH: release.keystore
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: Stage the APK under a stable filename
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk LinkQRWallet.apk
+          ls -la LinkQRWallet.apk
+
+      - name: Verify the APK is signed
+        run: |
+          APKSIGNER=$(ls "${ANDROID_HOME:-$ANDROID_SDK_ROOT}"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
+          [ -n "$APKSIGNER" ] || { echo "apksigner not found in the Android SDK" >&2; exit 1; }
+          "$APKSIGNER" verify --print-certs LinkQRWallet.apk
 
       - name: Publish release assets
         uses: softprops/action-gh-release@718ea10b132b3b2eba29c1007bb80653f286566b # v2
@@ -104,6 +133,8 @@ jobs:
           tag_name: v${{ steps.bump.outputs.version_name }}
           name: v${{ steps.bump.outputs.version_name }}
           generate_release_notes: true
-          files: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/app-release.apk
+          files: LinkQRWallet.apk
+
+      - name: Remove keystore from the runner
+        if: always()
+        run: rm -f release.keystore
