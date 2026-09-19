@@ -1,0 +1,5 @@
+Link QR Wallet turns URLs into QR codes and stores them in a searchable, sortable library on the device. Add a link and the app automatically fetches the page title, then generates a QR code that can be shared as an image or scanned back in.
+
+Links can be searched and sorted by title, domain, or date. A built-in scanner reads existing QR codes so codes made elsewhere can be imported into the same library.
+
+All data is stored locally; nothing is sent to a server. The app uses the camera only to scan QR codes and the network only to fetch a page's title when a link is added.
