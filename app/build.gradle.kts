@@ -11,23 +11,10 @@ tasks.withType<Test>().configureEach {
     failFast = true
 }
 
-// The release workflow computes the version from the latest git tag and passes it
-// in; F-Droid passes it as a Gradle property. A local build with neither just gets
-// 0.0.0 and never pretends otherwise.
-val appVersionName: String = providers.gradleProperty("VERSION_NAME").orNull?.takeIf { it.isNotBlank() }
-    ?: System.getenv("VERSION_NAME")?.takeIf { it.isNotBlank() }
-    ?: "0.0.0"
-val semver = appVersionName.split(".")
-val vMajor = semver.getOrNull(0)?.toIntOrNull() ?: 0
-val vMinor = semver.getOrNull(1)?.toIntOrNull() ?: 0
-val vPatch = semver.getOrNull(2)?.toIntOrNull() ?: 0
-// No "+ 1" here, unlike weather-android's scheme: this app's versionCode was a
-// small literal (7) before this change, and major*1_000_000 alone already lands
-// the next release (1.0.7 -> 1000007) safely above it. coerceAtLeast(1) only
-// matters for the unset-everything default (0.0.0 -> 0): AGP 8.13.2 validates
-// defaultConfig.versionCode at configuration time, so a 0 fails every task,
-// not just packaging -- this floor keeps a plain local build usable.
-val appVersionCode: Int = (vMajor * 1_000_000 + vMinor * 1_000 + vPatch).coerceAtLeast(1)
+// The version lives in gradle.properties, where the release workflow and F-Droid's
+// checkupdates both read it. See the comment there before bumping it.
+val appVersionName: String = providers.gradleProperty("VERSION_NAME").get()
+val appVersionCode: Int = providers.gradleProperty("VERSION_CODE").get().toInt()
 
 // Signing material only ever arrives through the environment. A missing keystore
 // is not an error — it just means this is a local build, which stays unsigned.
