@@ -66,6 +66,17 @@ android {
             }
         }
     }
+    packaging {
+        jniLibs {
+            // Prebuilt .so files (e.g. from CameraX/ML Kit AARs) get stripped by AGP with
+            // whatever NDK it finds, so a rebuild without that exact NDK produces different
+            // bytes -- F-Droid's builder has none unless its recipe pins one. Keeping the
+            // symbols leaves the libraries exactly as their AARs ship them, which rebuilds
+            // identically anywhere, and costs a few kB.
+            keepDebugSymbols += "**/*.so"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
