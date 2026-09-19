@@ -16,48 +16,25 @@ object QrDecoder {
     private val reader = QRCodeReader()
 
     /**
-     * Tries the frame as captured, then rotated 90/180/270 degrees. CameraX hands the
-     * analyzer frames in the sensor's native orientation, which for a phone held
-     * upright usually needs a 90-degree turn before the finder pattern reads --
-     * trying all four avoids depending on a device- or orientation-specific constant.
+     * A single decode pass, no manual rotation retries. ZXing's QR detector locates a
+     * code's three finder squares from their relative geometry, so it already reads a
+     * code that is rotated within the frame (e.g. the phone held sideways) without the
+     * caller pre-rotating the buffer -- see QrDecoderTest for a 90-degree-rotated
+     * frame decoded in one pass. Retrying rotations here used to allocate three extra
+     * width*height copies on every missed frame for no benefit.
      */
     fun decode(yPlane: ByteArray, width: Int, height: Int): String? {
-        var data = yPlane
-        var w = width
-        var h = height
-        repeat(4) { attempt ->
-            val source = PlanarYUVLuminanceSource(data, w, h, 0, 0, w, h, false)
-            val bitmap = BinaryBitmap(HybridBinarizer(source))
-            try {
-                return reader.decode(bitmap).text
-            } catch (_: ReaderException) {
-                // Covers NotFoundException (no finder pattern at this rotation) as well
-                // as ChecksumException/FormatException, which are routine on a partial
-                // or motion-blurred frame while the user is still aiming the camera --
-                // none of these mean decoding should stop, only that this frame/
-                // rotation didn't produce a code.
-            } finally {
-                reader.reset()
-            }
-            if (attempt < 3) {
-                data = rotate90(data, w, h)
-                val rotatedWidth = h
-                h = w
-                w = rotatedWidth
-            }
+        val source = PlanarYUVLuminanceSource(yPlane, width, height, 0, 0, width, height, false)
+        val bitmap = BinaryBitmap(HybridBinarizer(source))
+        return try {
+            reader.decode(bitmap).text
+        } catch (_: ReaderException) {
+            // Covers NotFoundException (no finder pattern in this frame) as well as
+            // ChecksumException/FormatException, which are routine on a partial or
+            // motion-blurred frame while the user is still aiming the camera.
+            null
+        } finally {
+            reader.reset()
         }
-        return null
-    }
-
-    /** Rotates a single-byte-per-pixel plane 90 degrees clockwise. */
-    private fun rotate90(data: ByteArray, width: Int, height: Int): ByteArray {
-        val rotated = ByteArray(data.size)
-        var pos = 0
-        for (x in 0 until width) {
-            for (y in height - 1 downTo 0) {
-                rotated[pos++] = data[y * width + x]
-            }
-        }
-        return rotated
     }
 }

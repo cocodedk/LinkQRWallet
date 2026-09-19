@@ -46,4 +46,31 @@ class QrDecoderTest {
 
         assertNull(QrDecoder.decode(blankFrame, 100, 100))
     }
+
+    /** Rotates a single-byte-per-pixel plane 90 degrees clockwise, the same way a
+     *  frame would look if the phone were held in a different orientation. */
+    private fun rotate90(data: ByteArray, width: Int, height: Int): ByteArray {
+        val rotated = ByteArray(data.size)
+        var pos = 0
+        for (x in 0 until width) {
+            for (y in height - 1 downTo 0) {
+                rotated[pos++] = data[y * width + x]
+            }
+        }
+        return rotated
+    }
+
+    @Test
+    fun decode_readsARotatedFrameInOneDecodePass() {
+        val content = "https://example.com/rotated"
+        val size = 200
+        // Square frame, so rotating 90 degrees keeps the same width and height --
+        // QrDecoder.decode no longer rotates internally, so this proves ZXing's own
+        // finder-pattern detector reads an in-plane-rotated code in a single call.
+        val rotated = rotate90(renderToYPlane(content, size), size, size)
+
+        val decoded = QrDecoder.decode(rotated, size, size)
+
+        assertEquals(content, decoded)
+    }
 }

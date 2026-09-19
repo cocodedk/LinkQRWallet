@@ -120,7 +120,12 @@ fun ScanQrScreen(
                     }, 1200)
                     return@qrFrameAnalyzer
                 }
-                onResult(normalized)
+                // onResult ultimately navigates (navController.navigate requires the
+                // main thread), but this whole callback runs on cameraExecutor -- the
+                // compareAndSet above already claimed the one-shot result on that
+                // background thread, so hopping to main here can't let a duplicate
+                // frame navigate twice.
+                mainHandler.post { onResult(normalized) }
             }
         )
 
