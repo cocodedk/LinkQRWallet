@@ -1,0 +1,1 @@
+Dropped a network-state permission the app never used. It came from a camera library and is now removed, so the app asks only for the camera and for internet access to read a page title.

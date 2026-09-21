@@ -4,6 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- androidx.camera:camera-view pulls in camera-video, which depends on
+         androidx.media3:media3-common; that library declares
+         ACCESS_NETWORK_STATE for its own network-media features. This app
+         never records video and never checks connectivity, so drop it. -->
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:node="remove" />
 
     <application
         android:name=".LinkQrWalletApp"
