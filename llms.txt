@@ -27,7 +27,7 @@ Link QR Wallet lets users save links as QR codes for quick access. Add a URL and
 ## Repository
 
 - GitHub: https://github.com/cocodedk/LinkQRWallet
-- Website: https://cocodedk.github.io/LinkQRWallet/
+- Website: https://qr.cocode.dk/
 
 ## Author
 
