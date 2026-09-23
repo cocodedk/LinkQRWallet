@@ -125,11 +125,6 @@
         outline: none;
         box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent);
       }
-      .footer {
-        margin-top: 48px;
-        font-size: 0.9rem;
-        color: rgba(27, 27, 27, 0.7);
-      }
       .qr-box {
         aspect-ratio: 1 / 1;
         display: grid;
@@ -148,9 +143,20 @@
         50% { transform: translateY(-8px); }
         100% { transform: translateY(0px); }
       }
+      /* The cocode.dk frame lines up with the .wrap column. .wrap has no box-sizing reset, so its
+         max-width (960px) caps the content box only and its 24px padding adds to that -- the
+         frame's own bar is border-box, so --cocode-max needs the full rendered width (960 + 2*24). */
+      cocode-head, cocode-foot { --cocode-max: 1008px; --cocode-gutter: 24px; }
     </style>
+    <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
+    <script type="module" src="https://brand.cocode.dk/v1.js"></script>
   </head>
   <body>
+    <!-- The cocode.dk family frame. Without JavaScript its child shows instead: a way home.
+         The site has no top bar of its own to replace. -->
+    <cocode-head project="Link QR Wallet" accent="#ff7a1a" on-accent="#ffffff">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-head>
     <main class="wrap">
       <section class="hero">
         <div>
@@ -220,7 +226,10 @@
           reading webpage titles.
         </p>
       </section>
-      <div class="footer">Built by cocodedk.</div>
     </main>
+
+    <cocode-foot repo="cocodedk/LinkQRWallet">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-foot>
   </body>
 </html>
