@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy policy - Link QR Wallet</title>
+    <meta name="description" content="Link QR Wallet keeps your saved links on your phone. It has no account, no server of ours, no analytics and no ads. The only network use is asking the website of a link you add for its page title." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://qr.cocode.dk/privacy/" />
+    <link rel="alternate" hreflang="en" href="https://qr.cocode.dk/privacy/" />
+    <link rel="alternate" hreflang="da" href="https://qr.cocode.dk/da/privacy/" />
+    <link rel="alternate" hreflang="x-default" href="https://qr.cocode.dk/privacy/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Privacy policy - Link QR Wallet" />
+    <meta property="og:url" content="https://qr.cocode.dk/privacy/" />
+    <meta property="og:image" content="https://qr.cocode.dk/img/share.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../shared-blocks.css" />
+    <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
+    <script type="module" src="https://brand.cocode.dk/v1.js"></script>
+  </head>
+  <body>
+    <cocode-head project="Link QR Wallet" accent="#ff7a1a" on-accent="#ffffff">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-head>
+    <header class="site-nav">
+      <!-- cocode-apps:nav:start -->
+<link rel="stylesheet" href="/css/cocode-nav.css">
+<a class="skip" href="#main">Skip to content</a>
+<nav class="cocode-nav" aria-label="Link QR Wallet">
+  <a class="brand" href="/" data-nav="home"><img src="/img/icon.png" alt="" width="32" height="32">Link QR Wallet</a>
+  <a href="/#how" data-nav="how">How it works</a>
+  <a href="/#install" data-nav="install">Install</a>
+  <a href="https://cocode.dk/" data-nav="more">More apps</a>
+</nav>
+<!-- cocode-apps:nav:end -->
+    </header>
+    <main id="main" tabindex="-1" class="wrap">
+      <article class="card prose">
+        <h1>Privacy policy - Link QR Wallet</h1>
+        <p class="meta">Effective <time datetime="2026-10-07">7 October 2026</time>. This policy describes the app as it is in version 1.0.10 (<code>com.cocode.linkqrwallet</code>).</p>
+
+        <h2>Summary</h2>
+        <p>Link QR Wallet keeps the links you save on your phone. It has no account, no server run by us, no analytics and no ads, and it sends us nothing. The app uses the internet for one thing: when you add a link, it asks the website that link points to for the page title. That website can see the request.</p>
+
+        <h2>What is collected</h2>
+        <p>We collect nothing. The app has no way to send anything to us. What the app handles, on your phone, is this:</p>
+        <ul>
+          <li><strong>Links you save.</strong> For each one, the address, a title, the domain (for example <code>example.com</code>) and the times it was added and last changed.</li>
+          <li><strong>Addresses you type, paste, scan or share into the app.</strong> These are kept only if you tap Save.</li>
+          <li><strong>Camera pictures while the scanner is open.</strong> The app reads QR codes from them and keeps them only in memory. They are never saved and never sent anywhere.</li>
+        </ul>
+        <p>The app has no account and never asks for your name, email address or phone number.</p>
+
+        <h2>Servers the app contacts</h2>
+        <p>Only one kind: the website of a link you are adding. The app asks it for the page and reads the page's title. There is no server of ours in between, and the app contacts no other server.</p>
+        <ul>
+          <li><strong>When.</strong> As soon as the add screen holds an address: after you type or paste one and pause for about half a second, when you scan one, when another app shares one into Link QR Wallet, or when you tap Fetch Title. This happens before you tap Save, so the website is contacted even if you then cancel.</li>
+          <li><strong>What the website sees.</strong> An ordinary web request from your phone that names the app as <code>LinkQRWallet/1.0</code>, plus your IP address and the time, as with any web request. If you leave off the start of an address, the app adds <code>https://</code>. If the website sends the app on to another address, the app follows, and that address sees the request too.</li>
+          <li><strong>What the app keeps.</strong> The title, and nothing else from the page. If the website does not answer within about 8 seconds, or the request fails, the app uses the domain as the title, and you can still save the link.</li>
+          <li><strong>What the app refuses.</strong> An address you scan is checked before it reaches the add screen, and an address is checked again when you tap Save. The check refuses anything that is not <code>http</code> or <code>https</code>, <code>localhost</code>, names ending in <code>.local</code> or <code>.onion</code>, names starting with <code>xn--</code>, and private or reserved IPv4 addresses. An address you type, paste or share in is looked up for its title before that check runs, so the lookup can reach such an address if you enter one.</li>
+        </ul>
+        <p>What each website does with the request is up to its own privacy policy. We do not see it.</p>
+
+        <h2>Permissions</h2>
+        <ul>
+          <li><strong>Camera.</strong> Asked for when you open the scanner, and used only while the scanner is open, to read QR codes. Without it you can still add links by typing, pasting or sharing them in.</li>
+          <li><strong>Internet.</strong> Used for the title lookup described above, and for nothing else.</li>
+        </ul>
+        <p>The app asks for no other permission: nothing for your contacts, location, microphone, photos or files. Android's support libraries add one more, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, which is private to this app.</p>
+
+        <h2>What stays on the phone</h2>
+        <ul>
+          <li><strong>Your links.</strong> They live in a database in the app's private storage (<code>linkqrwallet.db</code>) and are not synced to any service of ours. You can edit a link's title and delete a link on its detail screen. Clearing the app's data or uninstalling the app removes them all.</li>
+          <li><strong>QR images you share.</strong> When you tap Share QR, the app saves the image to its private cache folder and hands it, with the link's address, to Android's share sheet, which passes both to the app you pick. The app does not delete these images itself. They stay until Android clears the cache, you clear the app's cache or data, or you uninstall the app.</li>
+          <li><strong>Copy and Open.</strong> Copy puts a link's address on the clipboard. The app never reads the clipboard. Open passes the address to your browser, which then contacts the website under its own policy.</li>
+          <li><strong>Android backup.</strong> The app allows Android's backup and sets no exclusions. If backup is on for your phone, your saved links can be included in your backup with Google and in a phone-to-phone transfer. That is between you and Google, and we have no access to it. You can turn backup off in Android's settings.</li>
+        </ul>
+
+        <h2>Third parties</h2>
+        <p>The app contains no analytics, advertising or crash-reporting library, and no Google Play services or Firebase. Apart from the title lookup, the app's own code opens no network connection. The libraries it is built from handle QR codes (ZXing), the camera (CameraX), the database (Room), the screens (Jetpack Compose) and the page title (jsoup).</p>
+        <p>The third parties that can see something are the websites you look up (see above), the app you share a QR image with, your browser when you tap Open, and Google if you use Android backup.</p>
+        <h3>This website</h3>
+        <p>This website, <code>qr.cocode.dk</code>, is hosted on GitHub Pages. Your browser also loads the page's typeface from Google Fonts (<code>fonts.googleapis.com</code>) and its header and footer from <code>brand.cocode.dk</code>. Each of these servers sees your IP address, as any server would. The site sets no cookies of its own and runs no analytics. This applies to the website only, not to the app.</p>
+
+        <h2>Your rights</h2>
+        <p>Under the General Data Protection Regulation (GDPR) you have the right to access, correct and delete your data, and to complain. Cocode (Babak Bandpey) is the responsible party. Because the app sends us nothing, we hold no data about you. Your data is on your phone, where you can see, change and delete it as described above. For what a website you looked up holds, contact that website. You can complain to the Danish Data Protection Agency, <a href="https://www.datatilsynet.dk/english">Datatilsynet</a>.</p>
+
+        <h2>Contact</h2>
+        <p>Write to <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, or open an issue on <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a>.</p>
+
+        <h2>Changes</h2>
+        <p>If we change this policy, we change the date at the top and say what is new here. Older versions are in the project's history on <a href="https://github.com/cocodedk/LinkQRWallet">GitHub</a>.</p>
+        <p><strong>7 October 2026:</strong> the policy was written for version 1.0.10.</p>
+      </article>
+    </main>
+
+    <div class="site-foot">
+      <!-- cocode-apps:footer:start -->
+<footer class="cocode-footer">
+  <a href="https://github.com/cocodedk/LinkQRWallet">Source code</a> ·
+  License: MIT ·
+  <a href="https://cocode.dk/">Made by Cocode (cocode.dk)</a>
+</footer>
+<!-- cocode-apps:footer:end -->
+    </div>
+
+    <cocode-foot repo="cocodedk/LinkQRWallet">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-foot>
+  </body>
+</html>

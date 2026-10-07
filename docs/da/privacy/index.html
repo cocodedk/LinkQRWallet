@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privatlivspolitik - Link QR Wallet</title>
+    <meta name="description" content="Link QR Wallet gemmer dine links på din telefon. Appen har ingen konto, ingen server fra os, ingen statistik og ingen reklamer. Den bruger kun internettet til at spørge det websted, et link peger på, om sidens titel." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://qr.cocode.dk/da/privacy/" />
+    <link rel="alternate" hreflang="en" href="https://qr.cocode.dk/privacy/" />
+    <link rel="alternate" hreflang="da" href="https://qr.cocode.dk/da/privacy/" />
+    <link rel="alternate" hreflang="x-default" href="https://qr.cocode.dk/privacy/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Privatlivspolitik - Link QR Wallet" />
+    <meta property="og:url" content="https://qr.cocode.dk/da/privacy/" />
+    <meta property="og:image" content="https://qr.cocode.dk/img/share.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="../../shared-blocks.css" />
+    <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
+    <script type="module" src="https://brand.cocode.dk/v1.js"></script>
+  </head>
+  <body>
+    <cocode-head project="Link QR Wallet" accent="#ff7a1a" on-accent="#ffffff">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-head>
+    <header class="site-nav">
+      <!-- cocode-apps:nav:start -->
+<link rel="stylesheet" href="/css/cocode-nav.css">
+<a class="skip" href="#main">Spring til indhold</a>
+<nav class="cocode-nav" aria-label="Link QR Wallet">
+  <a class="brand" href="/da/" data-nav="home"><img src="/img/icon.png" alt="" width="32" height="32">Link QR Wallet</a>
+  <a href="/da/#how" data-nav="how">Sådan virker det</a>
+  <a href="/da/#install" data-nav="install">Installér</a>
+  <a href="https://cocode.dk/" data-nav="more">Flere apps</a>
+</nav>
+<!-- cocode-apps:nav:end -->
+    </header>
+    <main id="main" tabindex="-1" class="wrap">
+      <article class="card prose">
+        <h1>Privatlivspolitik - Link QR Wallet</h1>
+        <p class="meta">Gældende fra <time datetime="2026-10-07">7. oktober 2026</time>. Politikken beskriver appen, som den er i version 1.0.10 (<code>com.cocode.linkqrwallet</code>).</p>
+
+        <h2>Resumé</h2>
+        <p>Link QR Wallet gemmer de links, du vælger at gemme, på din telefon. Appen har ingen konto, ingen server, som vi driver, ingen statistik og ingen reklamer, og den sender ikke noget til os. Appen bruger internettet til én ting: Når du tilføjer et link, spørger den det websted, linket peger på, om sidens titel. Webstedet kan se forespørgslen.</p>
+
+        <h2>Hvad der indsamles</h2>
+        <p>Vi indsamler ingenting. Appen har ingen måde at sende noget til os på. Det, appen håndterer på din telefon, er:</p>
+        <ul>
+          <li><strong>Links, du gemmer.</strong> For hvert link adressen, en titel, domænet (for eksempel <code>example.com</code>) og tidspunkterne for, hvornår det blev tilføjet og sidst ændret.</li>
+          <li><strong>Adresser, du skriver, indsætter, scanner eller deler ind i appen.</strong> De bliver kun gemt, hvis du trykker på Save.</li>
+          <li><strong>Kamerabilleder, mens scanneren er åben.</strong> Appen aflæser QR-koder i dem og holder dem kun i hukommelsen. De bliver aldrig gemt og aldrig sendt nogen steder hen.</li>
+        </ul>
+        <p>Appen har ingen konto og beder aldrig om dit navn, din e-mailadresse eller dit telefonnummer.</p>
+
+        <h2>Servere appen kontakter</h2>
+        <p>Kun én slags: webstedet bag et link, du er ved at tilføje. Appen henter siden og læser dens titel. Der ligger ingen server fra os imellem, og appen kontakter ingen andre servere.</p>
+        <ul>
+          <li><strong>Hvornår.</strong> Så snart tilføjelsesskærmen har en adresse: når du har skrevet eller indsat en og holder en pause på omkring et halvt sekund, når du scanner en, når en anden app deler en ind i Link QR Wallet, eller når du trykker på Fetch Title. Det sker, før du trykker på Save, så webstedet bliver kontaktet, selv om du bagefter fortryder.</li>
+          <li><strong>Hvad webstedet ser.</strong> En almindelig webforespørgsel fra din telefon, hvor appen kalder sig <code>LinkQRWallet/1.0</code>, og som ved enhver webforespørgsel din IP-adresse og tidspunktet. Hvis du udelader begyndelsen af en adresse, sætter appen <code>https://</code> foran. Hvis webstedet sender appen videre til en anden adresse, følger appen med, og den adresse ser også forespørgslen.</li>
+          <li><strong>Hvad appen beholder.</strong> Titlen og intet andet fra siden. Svarer webstedet ikke inden for cirka 8 sekunder, eller mislykkes forespørgslen, bruger appen domænet som titel, og du kan stadig gemme linket.</li>
+          <li><strong>Hvad appen afviser.</strong> En adresse, du scanner, bliver tjekket, før den når tilføjelsesskærmen, og en adresse bliver tjekket igen, når du trykker på Save. Tjekket afviser alt, der ikke er <code>http</code> eller <code>https</code>, <code>localhost</code>, navne der ender på <code>.local</code> eller <code>.onion</code>, navne der begynder med <code>xn--</code>, og private eller reserverede IPv4-adresser. En adresse, du skriver, indsætter eller deler ind, bliver slået op for at finde en titel, før tjekket kører. Opslaget kan altså nå sådan en adresse, hvis du taster den ind.</li>
+        </ul>
+        <p>Hvad hvert websted gør med forespørgslen, afgør dets egen privatlivspolitik. Det ser vi ikke.</p>
+
+        <h2>Tilladelser</h2>
+        <ul>
+          <li><strong>Kamera.</strong> Appen spørger, når du åbner scanneren, og bruger kameraet kun, mens scanneren er åben, til at aflæse QR-koder. Uden tilladelsen kan du stadig tilføje links ved at skrive, indsætte eller dele dem ind.</li>
+          <li><strong>Internet.</strong> Bruges til titelopslaget ovenfor og til intet andet.</li>
+        </ul>
+        <p>Appen beder ikke om andre tilladelser: ingenting til dine kontakter, din placering, din mikrofon, dine billeder eller dine filer. Androids understøttelsesbiblioteker tilføjer én til, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, som kun gælder for denne app.</p>
+
+        <h2>Hvad der bliver på telefonen</h2>
+        <ul>
+          <li><strong>Dine links.</strong> De ligger i en database i appens private lager (<code>linkqrwallet.db</code>) og bliver ikke overført til nogen tjeneste hos os. Du kan rette et links titel og slette et link på dets detaljeskærm. Rydder du appens data eller afinstallerer appen, forsvinder alle links.</li>
+          <li><strong>QR-billeder, du deler.</strong> Når du trykker på Share QR, gemmer appen billedet i sin private cachemappe og giver det sammen med linkets adresse til Androids delingsmenu, som sender begge dele videre til den app, du vælger. Appen sletter ikke selv billederne. De bliver liggende, til Android rydder cachen, du rydder appens cache eller data, eller du afinstallerer appen.</li>
+          <li><strong>Copy og Open.</strong> Copy lægger et links adresse på udklipsholderen. Appen læser aldrig udklipsholderen. Open giver adressen til din browser, som så kontakter webstedet efter sin egen politik.</li>
+          <li><strong>Androids sikkerhedskopi.</strong> Appen tillader Androids sikkerhedskopiering og har ingen undtagelser. Er sikkerhedskopiering slået til på din telefon, kan dine gemte links komme med i din sikkerhedskopi hos Google og i en overførsel fra telefon til telefon. Det er mellem dig og Google, og vi har ikke adgang til den. Du kan slå sikkerhedskopiering fra i Androids indstillinger.</li>
+        </ul>
+
+        <h2>Tredjeparter</h2>
+        <p>Appen indeholder intet bibliotek til statistik, reklamer eller fejlrapportering, og hverken Google Play-tjenester eller Firebase. Ud over titelopslaget åbner appens egen kode ingen netværksforbindelser. De biblioteker, appen er bygget af, tager sig af QR-koder (ZXing), kameraet (CameraX), databasen (Room), skærmene (Jetpack Compose) og sidens titel (jsoup).</p>
+        <p>De tredjeparter, der kan se noget, er de websteder, du slår op (se ovenfor), den app, du deler et QR-billede med, din browser, når du trykker på Open, og Google, hvis du bruger Androids sikkerhedskopi.</p>
+        <h3>Dette websted</h3>
+        <p>Dette websted, <code>qr.cocode.dk</code>, ligger på GitHub Pages. Din browser henter også sidens skrifttype fra Google Fonts (<code>fonts.googleapis.com</code>) og sidens top og bund fra <code>brand.cocode.dk</code>. Hver af disse servere ser din IP-adresse, som enhver server gør. Webstedet sætter ingen egne cookies og kører ingen statistik. Det gælder kun webstedet, ikke appen.</p>
+
+        <h2>Dine rettigheder</h2>
+        <p>Efter databeskyttelsesforordningen (GDPR) har du ret til indsigt i dine data, til at få dem rettet og slettet og til at klage. Cocode (Babak Bandpey) er dataansvarlig. Fordi appen ikke sender os noget, har vi ingen data om dig. Dine data ligger på din telefon, hvor du kan se, ændre og slette dem, som beskrevet ovenfor. Hvad et websted, du har slået op, ligger inde med, må du spørge webstedet om. Du kan klage til <a href="https://www.datatilsynet.dk/">Datatilsynet</a>.</p>
+
+        <h2>Kontakt</h2>
+        <p>Skriv til <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, eller opret en sag på <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a>.</p>
+
+        <h2>Ændringer</h2>
+        <p>Ændrer vi politikken, ændrer vi datoen øverst og skriver her, hvad der er nyt. Ældre udgaver ligger i projektets historik på <a href="https://github.com/cocodedk/LinkQRWallet">GitHub</a>.</p>
+        <p><strong>7. oktober 2026:</strong> politikken blev skrevet til version 1.0.10.</p>
+      </article>
+    </main>
+
+    <div class="site-foot">
+      <!-- cocode-apps:footer:start -->
+<footer class="cocode-footer">
+  <a href="https://github.com/cocodedk/LinkQRWallet">Kildekode</a> ·
+  Licens: MIT ·
+  <a href="https://cocode.dk/">Lavet af Cocode (cocode.dk)</a>
+</footer>
+<!-- cocode-apps:footer:end -->
+    </div>
+
+    <cocode-foot repo="cocodedk/LinkQRWallet">
+      <a href="https://cocode.dk">cocode.dk</a>
+    </cocode-foot>
+  </body>
+</html>
