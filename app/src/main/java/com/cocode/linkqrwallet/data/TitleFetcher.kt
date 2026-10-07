@@ -1,13 +1,14 @@
 package com.cocode.linkqrwallet.data
 
-import java.net.URI
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 /**
- * Reads a page's title. It follows at most 5 redirects itself, checking the address of the page
- * and of every redirect with [UrlSafety]. The client checks where each name leads before it
+ * Reads a page's title. It follows at most 5 redirects itself, resolving each one the way OkHttp
+ * does, checking the address of the page and of every redirect with [UrlSafety], and never
+ * following a redirect from https to http. The client checks where each name leads before it
  * connects. If anything points to the phone or the local network, it stops and gives no title.
  */
 open class TitleFetcher(private val client: PageClient = OkHttpPageClient()) {
@@ -30,7 +31,9 @@ open class TitleFetcher(private val client: PageClient = OkHttpPageClient()) {
                 return answer.title?.trim()?.takeIf { it.isNotBlank() }
             }
             if (answer.status !in 300..399) return null
-            current = URI(current).resolve(answer.location ?: return null).toString()
+            val next = current.toHttpUrlOrNull()?.resolve(answer.location ?: return null) ?: return null
+            if (current.startsWith("https:", ignoreCase = true) && !next.isHttps) return null
+            current = next.toString()
         }
         return null
     }

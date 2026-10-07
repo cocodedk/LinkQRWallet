@@ -160,4 +160,21 @@ class AddLinkViewModelTest {
         assertEquals(listOf("https://example.com"), fetcher.asked)
         assertEquals(listOf("Kept", "Example Domain"), dao.items.map { it.title })
     }
+
+    @Test
+    fun renamingAndThenRenamingBackBeforeTheFetchStillKeepsThePersonsChoice() {
+        val gate = CompletableDeferred<Unit>()
+        val model = viewModel(RecordingTitleFetcher("Example Domain", gate))
+        model.updateUrl("https://example.com")
+        model.validateAndSave(noop, {})
+        scheduler.runCurrent()
+        val saved = dao.items.single()
+        // each rename bumps updatedAt, as DetailViewModel does
+        dao.items[0] = saved.copy(title = "My site", updatedAt = saved.updatedAt + 1)
+        dao.items[0] = dao.items[0].copy(title = saved.title, updatedAt = saved.updatedAt + 2)
+
+        gate.complete(Unit)
+        runAllWork()
+        assertEquals("example.com", dao.items.single().title)
+    }
 }

@@ -1,9 +1,13 @@
 package com.cocode.linkqrwallet.data
 
 import java.io.ByteArrayInputStream
+import java.io.IOException
+import java.net.InetAddress
 import java.net.Proxy
 import java.util.concurrent.TimeUnit
+import javax.net.SocketFactory
 import okhttp3.Dns
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -18,27 +22,46 @@ fun interface PageClient {
 }
 
 /**
- * Connects with OkHttp. It never follows a redirect itself, goes to no proxy, and connects only
- * to addresses [dns] returned, so the addresses that were checked are the ones used.
+ * Connects with OkHttp. It never follows a redirect itself, retries nothing, goes to no proxy, and
+ * connects only to addresses [dns] returned. As a second check, a network interceptor looks at the
+ * address the socket actually connected to and refuses it with [isBlocked] before any request is
+ * written, which also covers a host written as a number, which OkHttp never passes to [dns].
  */
-class OkHttpPageClient(dns: Dns = CheckedDns()) : PageClient {
+class OkHttpPageClient(
+    dns: Dns = CheckedDns(),
+    isBlocked: (InetAddress) -> Boolean = AddressRules::isBlocked,
+    socketFactory: SocketFactory = SocketFactory.getDefault()
+) : PageClient {
     private val http = OkHttpClient.Builder()
         .dns(dns)
+        .socketFactory(socketFactory)
         .proxy(Proxy.NO_PROXY)
         .followRedirects(false)
         .followSslRedirects(false)
+        .retryOnConnectionFailure(false)
         .callTimeout(8, TimeUnit.SECONDS)
+        .addNetworkInterceptor(Interceptor { chain ->
+            val address = chain.connection()?.route()?.socketAddress?.address
+            if (address == null || isBlocked(address)) {
+                throw IOException("The app does not send a request to this address")
+            }
+            chain.proceed(chain.request())
+        })
         .build()
 
     override fun get(url: String): PageAnswer {
         val request = Request.Builder().url(url).header("User-Agent", "LinkQRWallet/1.0").build()
-        http.newCall(request).execute().use { response ->
+        val call = http.newCall(request)
+        call.execute().use { response ->
             val status = response.code
-            return if (status in 200..299) {
+            val answer = if (status in 200..299) {
                 PageAnswer(status, title = readTitle(response))
             } else {
                 PageAnswer(status, location = response.header("Location"))
             }
+            // Closing a response would otherwise read the rest of the body first.
+            call.cancel()
+            return answer
         }
     }
 

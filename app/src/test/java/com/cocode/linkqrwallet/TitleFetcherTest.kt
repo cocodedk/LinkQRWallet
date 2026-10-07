@@ -108,4 +108,28 @@ class TitleFetcherTest {
             assertEquals(target, listOf("https://example.com/"), asked)
         }
     }
+
+    @Test
+    fun aRelativeRedirectIsResolvedTheWayBrowsersDo() {
+        answers["https://example.com/dir/page?old=1"] = redirect("?next=2")
+        answers["https://example.com/dir/page?next=2"] = redirect("../up")
+        answers["https://example.com/up"] = PageAnswer(200, title = "Up")
+        assertEquals("Up", title("https://example.com/dir/page?old=1"))
+        assertEquals(
+            listOf(
+                "https://example.com/dir/page?old=1",
+                "https://example.com/dir/page?next=2",
+                "https://example.com/up"
+            ),
+            asked
+        )
+    }
+
+    @Test
+    fun aRedirectFromHttpsToHttpIsNotFollowed() {
+        answers["https://example.com/"] = redirect("http://example.com/plain")
+        answers["http://example.com/plain"] = PageAnswer(200, title = "Plain")
+        assertNull(title("https://example.com/"))
+        assertEquals(listOf("https://example.com/"), asked)
+    }
 }

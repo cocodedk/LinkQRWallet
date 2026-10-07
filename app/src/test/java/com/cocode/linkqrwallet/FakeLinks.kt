@@ -33,8 +33,8 @@ class FakeLinkDao : LinkItemDao {
         items.removeAll { it.id == item.id }
     }
 
-    override suspend fun replaceTitle(id: Long, expected: String, title: String) {
-        val index = items.indexOfFirst { it.id == id && it.title == expected }
+    override suspend fun replaceTitle(id: Long, expected: String, savedAt: Long, title: String) {
+        val index = items.indexOfFirst { it.id == id && it.title == expected && it.updatedAt == savedAt }
         if (index >= 0) items[index] = items[index].copy(title = title)
     }
 }

@@ -30,7 +30,7 @@
     <string name="add_url_label">Web address (URL)</string>
     <string name="add_qr_preview_description">QR code preview</string>
     <string name="add_website_placeholder">The website name will appear here</string>
-    <string name="add_title_hint">If you leave this empty, the app opens the web address once after you save, to read the page\'s title.</string>
+    <string name="add_title_hint">If you leave this empty, the app looks up the page\'s title in the background after you save.</string>
     <string name="add_duplicate_title">Already saved</string>
     <string name="add_duplicate_body">This link is already in your wallet. Do you want to save a second copy?</string>
     <string name="add_duplicate_confirm">Save a second copy</string>
@@ -73,7 +73,7 @@
     <string name="about_privacy_title">Privacy</string>
     <string name="about_privacy_local">Your saved links stay on your phone. The app has no account, no ads, no analytics and no tracking, and it never sends your links to Cocode.</string>
     <string name="about_privacy_camera">The camera is used only while the Scan QR code screen is open. The camera picture is read on your phone and is never saved or sent. The app keeps the text of a QR code only if you choose to save it as a link.</string>
-    <string name="about_privacy_internet">The app uses the internet for one thing: reading the page title of a link you save. If you leave the title empty, the app opens that web address once after you save, and reads the page\'s title. Nothing is sent to any website before you save. If you type a title yourself, the app does not ask the website for one. The request goes straight from your phone to that website, and the website can see your phone\'s IP address, the number that identifies your connection on the internet. Before the app connects, it checks where the website\'s name leads, and it checks every page it is sent on to. It connects only to addresses it has checked, and it stops if any of them points to your own phone or network.</string>
+    <string name="about_privacy_internet">The app uses the internet for one thing: reading the page title of a link you save. If you leave the title empty, the app looks up the page\'s title in the background after you save. Nothing is sent to any website before you save. If you type a title yourself, the app does not ask the website for one. The request goes straight from your phone to that website, and the website can see your phone\'s IP address, the number that identifies your connection on the internet. Before the app connects, it checks where the website\'s name leads, and it checks every page it is sent on to. It connects only to addresses it has checked, and it stops if any of them points to your own phone or network.</string>
     <string name="about_privacy_backup">If you have turned on Android backup, Android may include this app\'s data in your own backup. Cocode has no access to it.</string>
     <string name="about_privacy_link">Read the privacy policy</string>
     <string name="about_links_title">Links</string>

@@ -95,14 +95,14 @@ class AddLinkViewModel(
             updatedAt = now
         )
         val id = repository.insert(item)
-        if (typedTitle.isBlank()) readTitleLater(id, normalized, fallbackTitle)
+        if (typedTitle.isBlank()) readTitleLater(id, normalized, fallbackTitle, now)
         onSaved(id)
     }
 
-    private fun readTitleLater(id: Long, url: String, fallbackTitle: String) {
+    private fun readTitleLater(id: Long, url: String, fallbackTitle: String, savedAt: Long) {
         backgroundScope.launch {
             val pageTitle = titleFetcher.fetchTitle(url) ?: return@launch
-            repository.replaceTitle(id, expected = fallbackTitle, title = pageTitle)
+            repository.replaceTitle(id, expected = fallbackTitle, savedAt = savedAt, title = pageTitle)
         }
     }
 
