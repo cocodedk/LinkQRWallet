@@ -4,6 +4,8 @@
   --bg: #f5e7d6;
   --text: #1c1a1f;
   --accent: #ff7a1a;
+  /* Focus rings and the current-page mark: at least 4.4:1 on every background of the page (3:1 needed). */
+  --focus: #a63d00;
   --card: #fff7ee;
   --shadow: rgba(28, 26, 31, 0.15);
 }
@@ -37,7 +39,7 @@ body {
 }
 .badge span {
   background: var(--accent);
-  color: white;
+  color: var(--text);
   padding: 2px 8px;
   border-radius: 999px;
 }
@@ -115,7 +117,7 @@ p {
 .cta-secondary:focus,
 .cta-secondary:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent);
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--focus);
 }
 .qr-box {
   aspect-ratio: 1 / 1;

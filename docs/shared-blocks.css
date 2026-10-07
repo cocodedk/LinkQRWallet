@@ -26,7 +26,7 @@
 }
 .cocode-nav [aria-current="page"]:not(.brand) {
   text-decoration: underline;
-  text-decoration-color: var(--accent);
+  text-decoration-color: var(--focus);
   text-decoration-thickness: 3px;
   text-underline-offset: 6px;
 }
@@ -83,7 +83,7 @@ main:focus {
 }
 .install a:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--accent);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--focus);
 }
 .site-foot {
   padding-bottom: 40px;
