@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
@@ -68,11 +69,13 @@ private fun openLink(context: Context, url: String): Boolean = try {
 @Composable
 fun AboutScreen(onBack: () -> Unit, targets: AboutTargets = appAboutTargets) {
     val context = LocalContext.current
+    // The language the app's own strings use, so the website and privacy pages match it.
+    val language = LocalConfiguration.current.locales[0].language
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val noBrowser = stringResource(R.string.about_no_browser)
     val open = { link: AboutLink ->
-        val url = aboutUrl(link, targets)
+        val url = aboutUrl(link, targets, language)
         if (url != null && !openLink(context, url)) {
             scope.launch { snackbar.showSnackbar(noBrowser, duration = SnackbarDuration.Long) }
         }
@@ -116,7 +119,7 @@ fun AboutScreen(onBack: () -> Unit, targets: AboutTargets = appAboutTargets) {
             Body(R.string.about_privacy_camera)
             Body(R.string.about_privacy_internet)
             Body(R.string.about_privacy_backup)
-            if (aboutUrl(AboutLink.Privacy, targets) != null) {
+            if (aboutUrl(AboutLink.Privacy, targets, language) != null) {
                 LinkButton(R.string.about_privacy_link) { open(AboutLink.Privacy) }
             }
 
