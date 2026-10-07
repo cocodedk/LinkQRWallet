@@ -4,15 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -88,6 +85,7 @@ fun AddLinkScreen(
                 value = state.title,
                 onValueChange = viewModel::updateTitle,
                 label = { Text(stringResource(R.string.field_title)) },
+                supportingText = { Text(stringResource(R.string.add_title_hint)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Row(
@@ -109,22 +107,6 @@ fun AddLinkScreen(
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = {
-                            state.normalizedUrl?.let { viewModel.fetchTitle(it) }
-                        },
-                        enabled = state.normalizedUrl != null
-                    ) {
-                        if (state.isFetchingTitle) {
-                            CircularProgressIndicator(
-                                strokeWidth = 2.dp,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.size(8.dp))
-                        }
-                        Text(stringResource(R.string.add_fetch_title))
-                    }
                 }
             }
             Button(

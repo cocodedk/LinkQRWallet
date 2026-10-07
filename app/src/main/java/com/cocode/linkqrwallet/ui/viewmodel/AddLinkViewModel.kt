@@ -10,8 +10,7 @@ import com.cocode.linkqrwallet.data.TitleFetcher
 import com.cocode.linkqrwallet.data.UrlUtils
 import com.cocode.linkqrwallet.data.UrlSafety
 import com.cocode.linkqrwallet.ui.messageRes
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,19 +21,22 @@ data class AddLinkState(
     val normalizedUrl: String? = null,
     val title: String = "",
     val domain: String = "",
-    val isFetchingTitle: Boolean = false,
     @StringRes val errorMessage: Int? = null,
     val duplicateId: Long? = null
 )
 
+/**
+ * Nothing here touches the network until a link is saved: typing, scanning and sharing an
+ * address only fill in the screen. After a save, [backgroundScope] reads the page title once,
+ * so it finishes even when the screen is already gone.
+ */
 class AddLinkViewModel(
     private val repository: LinkRepository,
-    private val titleFetcher: TitleFetcher
+    private val titleFetcher: TitleFetcher,
+    private val backgroundScope: CoroutineScope
 ) : ViewModel() {
     private val state = MutableStateFlow(AddLinkState())
     val uiState: StateFlow<AddLinkState> = state.asStateFlow()
-
-    private var fetchJob: Job? = null
 
     fun updateUrl(value: String) {
         val normalized = UrlUtils.normalizeUrl(value)
@@ -46,40 +48,10 @@ class AddLinkViewModel(
             errorMessage = null,
             duplicateId = null
         )
-        scheduleTitleFetch(normalized)
     }
 
     fun updateTitle(value: String) {
         state.value = state.value.copy(title = value)
-    }
-
-    private fun scheduleTitleFetch(normalized: String?) {
-        fetchJob?.cancel()
-        if (normalized == null) return
-        fetchJob = viewModelScope.launch {
-            delay(400)
-            fetchTitle(normalized)
-        }
-    }
-
-    fun fetchTitle(url: String) {
-        if (url.isBlank()) return
-        viewModelScope.launch {
-            state.value = state.value.copy(isFetchingTitle = true)
-            val title = titleFetcher.fetchTitle(url)
-            val currentTitle = state.value.title
-            val fallbackTitle = UrlUtils.domainFromUrl(url)
-            val nextTitle = when {
-                title != null && currentTitle.isBlank() -> title
-                title != null && currentTitle == fallbackTitle -> title
-                currentTitle.isBlank() -> fallbackTitle
-                else -> currentTitle
-            }
-            state.value = state.value.copy(
-                title = nextTitle,
-                isFetchingTitle = false
-            )
-        }
     }
 
     fun validateAndSave(onSaved: (Long) -> Unit, onDuplicate: (Long) -> Unit) {
@@ -93,7 +65,6 @@ class AddLinkViewModel(
             state.value = state.value.copy(errorMessage = safety.reason.messageRes())
             return
         }
-        val currentTitle = state.value.title.ifBlank { UrlUtils.domainFromUrl(normalized) }
         viewModelScope.launch {
             val existing = repository.findByUrl(normalized)
             if (existing != null) {
@@ -101,33 +72,37 @@ class AddLinkViewModel(
                 onDuplicate(existing.id)
                 return@launch
             }
-            val now = System.currentTimeMillis()
-            val item = LinkItem(
-                url = normalized,
-                title = currentTitle,
-                domain = UrlUtils.domainFromUrl(normalized),
-                createdAt = now,
-                updatedAt = now
-            )
-            val id = repository.insert(item)
-            onSaved(id)
+            save(normalized, onSaved)
         }
     }
 
     fun saveDuplicateAllowed(onSaved: (Long) -> Unit) {
         val normalized = state.value.normalizedUrl ?: return
-        val currentTitle = state.value.title.ifBlank { UrlUtils.domainFromUrl(normalized) }
-        viewModelScope.launch {
-            val now = System.currentTimeMillis()
-            val item = LinkItem(
-                url = normalized,
-                title = currentTitle,
-                domain = UrlUtils.domainFromUrl(normalized),
-                createdAt = now,
-                updatedAt = now
-            )
-            val id = repository.insert(item)
-            onSaved(id)
+        if (!UrlSafety.check(normalized).isSafe) return
+        viewModelScope.launch { save(normalized, onSaved) }
+    }
+
+    /** Saves at once. A page title is read afterwards, and only if the person left the title empty. */
+    private suspend fun save(normalized: String, onSaved: (Long) -> Unit) {
+        val typedTitle = state.value.title
+        val fallbackTitle = UrlUtils.domainFromUrl(normalized)
+        val now = System.currentTimeMillis()
+        val item = LinkItem(
+            url = normalized,
+            title = typedTitle.ifBlank { fallbackTitle },
+            domain = fallbackTitle,
+            createdAt = now,
+            updatedAt = now
+        )
+        val id = repository.insert(item)
+        if (typedTitle.isBlank()) readTitleLater(id, normalized, fallbackTitle, now)
+        onSaved(id)
+    }
+
+    private fun readTitleLater(id: Long, url: String, fallbackTitle: String, savedAt: Long) {
+        backgroundScope.launch {
+            val pageTitle = titleFetcher.fetchTitle(url) ?: return@launch
+            repository.replaceTitle(id, expected = fallbackTitle, savedAt = savedAt, title = pageTitle)
         }
     }
 

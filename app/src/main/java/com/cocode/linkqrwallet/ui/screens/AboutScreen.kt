@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 private val credits = listOf(
     R.string.credit_zxing,
     R.string.credit_jsoup,
+    R.string.credit_okhttp,
     R.string.credit_androidx,
     R.string.credit_kotlin
 )
