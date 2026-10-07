@@ -18,7 +18,7 @@ Link QR Wallet is an Android app that saves your web links on your phone and sho
 - Browse saved links and show their QR codes without an internet connection.
 
 ## Privacy
-Your saved links stay on your phone. The app has no account, no ads and no tracking. It uses the camera only to scan QR codes, and the internet only to look up page titles. When you save a link and have not typed a title, the app opens that web address once to read the page's title. Nothing is sent to any website before you save. The website can see your phone's IP address. If Android backup is turned on, Android may include your saved links in your own backup. Read the [privacy policy](https://qr.cocode.dk/privacy/).
+Your saved links stay on your phone. The app has no account, no ads and no tracking. It uses the camera only to scan QR codes, and the internet only to look up page titles. When you save a link and have not typed a title, the app looks up the page's title in the background. Nothing is sent to any website before you save. The website can see your phone's IP address. If Android backup is turned on, Android may include your saved links in your own backup. Read the [privacy policy](https://qr.cocode.dk/privacy/).
 
 ## Build
 ```bash

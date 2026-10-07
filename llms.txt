@@ -4,7 +4,7 @@
 
 ## What it does
 
-Link QR Wallet lets users save web links and show each one as a QR code. Add a web address and, after you save it, the app looks up the page title. The app stores links and titles on the phone and generates QR images when you display or share them. Users can search and sort their library, scan QR codes to save the link inside, and share QR images. No account is needed, and the library can be browsed without an internet connection. When you save a link without a title of your own, the app opens that web address once to read the page's title. Nothing is sent to any website before you save.
+Link QR Wallet lets users save web links and show each one as a QR code. Add a web address and, after you save it, the app looks up the page title. The app stores links and titles on the phone and generates QR images when you display or share them. Users can search and sort their library, scan QR codes to save the link inside, and share QR images. No account is needed, and the library can be browsed without an internet connection. When you save a link without a title of your own, the app looks up the page's title in the background. Nothing is sent to any website before you save.
 
 ## Key features
 
