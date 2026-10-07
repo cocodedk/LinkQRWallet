@@ -94,7 +94,7 @@ class UrlSafetyTest {
     fun checksPlainDottedDecimalAndIpv6LiteralsOnTheirBytes() {
         val blocked = listOf(
             "http://127.0.0.1/", "http://100.64.0.1/", "http://192.0.2.1/", "http://198.18.0.1/",
-            "http://255.255.255.255/", "http://[64:ff9b::7f00:1]/", "http://[::ffff:127.0.0.1]/"
+            "http://255.255.255.255/", "http://[64:ff9b::7f00:1]/", "http://[64:ff9b:1::1]/", "http://[::ffff:127.0.0.1]/"
         )
         blocked.forEach { assertEquals(it, UnsafeReason.Private, UrlSafety.check(it).reason) }
         assertTrue(UrlSafety.check("http://87.0.0.1/").isSafe)

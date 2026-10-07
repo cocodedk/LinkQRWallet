@@ -21,11 +21,16 @@ fun interface PageClient {
     fun get(url: String): PageAnswer
 }
 
+/** Carries the answer out of the network interceptor, so OkHttp neither follows up on it nor reads its body. */
+private class AnswerReady(val answer: PageAnswer) : IOException("The answer was read from the headers")
+
 /**
  * Connects with OkHttp. It never follows a redirect itself, retries nothing, goes to no proxy, and
- * connects only to addresses [dns] returned. As a second check, a network interceptor looks at the
- * address the socket actually connected to and refuses it with [isBlocked] before any request is
- * written, which also covers a host written as a number, which OkHttp never passes to [dns].
+ * connects only to addresses [dns] returned. A network interceptor looks at the address the socket
+ * actually connected to and refuses it with [isBlocked] before any request is written, which also
+ * covers a host written as a number, which OkHttp never passes to [dns]. For any answer outside
+ * 200 to 299 it takes the status and Location from the headers and cancels the call, so OkHttp
+ * neither retries it nor reads its body. For a page it reads at most [MAX_BODY_BYTES] of the body.
  */
 class OkHttpPageClient(
     dns: Dns = CheckedDns(),
@@ -45,23 +50,29 @@ class OkHttpPageClient(
             if (address == null || isBlocked(address)) {
                 throw IOException("The app does not send a request to this address")
             }
-            chain.proceed(chain.request())
+            val response = chain.proceed(chain.request())
+            if (response.code !in 200..299) {
+                val answer = PageAnswer(response.code, location = response.header("Location"))
+                chain.call().cancel()
+                response.close()
+                throw AnswerReady(answer)
+            }
+            response
         })
         .build()
 
     override fun get(url: String): PageAnswer {
         val request = Request.Builder().url(url).header("User-Agent", "LinkQRWallet/1.0").build()
         val call = http.newCall(request)
-        call.execute().use { response ->
-            val status = response.code
-            val answer = if (status in 200..299) {
-                PageAnswer(status, title = readTitle(response))
-            } else {
-                PageAnswer(status, location = response.header("Location"))
+        try {
+            call.execute().use { response ->
+                val answer = PageAnswer(response.code, title = readTitle(response))
+                // Closing a response would otherwise read the rest of the body first.
+                call.cancel()
+                return answer
             }
-            // Closing a response would otherwise read the rest of the body first.
-            call.cancel()
-            return answer
+        } catch (ready: AnswerReady) {
+            return ready.answer
         }
     }
 

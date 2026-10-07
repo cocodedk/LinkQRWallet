@@ -69,6 +69,13 @@ class AddressRulesTest {
         assertBlocked(v6(0x2001, 0x0db8, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff))
         assertAllowed(v6(0x2001, 0x0db7, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff))
         assertAllowed(v6(0x2001, 0x0db9, 0, 0, 0, 0, 0, 0))
+        // the local-use NAT64 range 64:ff9b:1::/48 is blocked whole, whatever it embeds
+        assertBlocked(v6(0x64, 0xff9b, 1, 0, 0, 0, 0, 0))
+        assertBlocked(v6(0x64, 0xff9b, 1, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff))
+        assertBlocked(v6(0x64, 0xff9b, 1, 0, 0, 0, 0x0808, 0x0808))
+        assertAllowed(v6(0x64, 0xff9b, 0, 1, 0, 0, 0, 0))
+        assertAllowed(v6(0x64, 0xff9b, 2, 0, 0, 0, 0, 0))
+        assertAllowed(v6(0x64, 0xff9a, 1, 0, 0, 0, 0, 0))
     }
 
     @Test

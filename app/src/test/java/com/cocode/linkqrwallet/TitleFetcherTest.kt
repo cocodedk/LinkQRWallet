@@ -52,12 +52,16 @@ class TitleFetcherTest {
 
     @Test
     fun aRedirectToAPrivateAddressIsNotFollowed() {
-        for (target in listOf("http://192.168.1.1/", "http://localhost/", "http://[::1]/", "http://[fd00::1]/")) {
-            asked.clear()
-            answers["https://example.com/"] = redirect(target)
-            answers[target] = PageAnswer(200, title = "Router")
-            assertNull(title("https://example.com/"))
-            assertEquals(listOf("https://example.com/"), asked)
+        // same scheme as the start page, so only the check of the destination can refuse it
+        for (scheme in listOf("https", "http")) {
+            for (host in listOf("192.168.1.1", "localhost", "[::1]", "[fd00::1]", "[64:ff9b:1::1]", "100.64.0.1")) {
+                val target = "$scheme://$host/"
+                asked.clear()
+                answers["$scheme://example.com/"] = redirect(target)
+                answers[target] = PageAnswer(200, title = "Router")
+                assertNull(target, title("$scheme://example.com/"))
+                assertEquals(target, listOf("$scheme://example.com/"), asked)
+            }
         }
     }
 
@@ -101,9 +105,11 @@ class TitleFetcherTest {
 
     @Test
     fun oddSpellingsOfLocalAddressesInARedirectAreNotFollowed() {
-        for (target in listOf("http://2130706433/", "http://0177.0.0.1/", "http://0x7f.0.0.1/", "http://127.1/")) {
+        for (host in listOf("2130706433", "0177.0.0.1", "0127.0.0.1", "0x7f.0.0.1", "127.1")) {
+            val target = "https://$host/"
             asked.clear()
             answers["https://example.com/"] = redirect(target)
+            answers[target] = PageAnswer(200, title = "Local")
             assertNull(target, title("https://example.com/"))
             assertEquals(target, listOf("https://example.com/"), asked)
         }

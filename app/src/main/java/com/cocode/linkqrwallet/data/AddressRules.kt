@@ -31,7 +31,7 @@ object AddressRules {
 
     private val ipv6Blocks = listOf(
         Block("::", 128), Block("::1", 128), Block("fc00::", 7), Block("fe80::", 10),
-        Block("fec0::", 10), Block("ff00::", 8), Block("2001:db8::", 32)
+        Block("fec0::", 10), Block("ff00::", 8), Block("2001:db8::", 32), Block("64:ff9b:1::", 48)
     )
 
     fun isBlocked(address: InetAddress): Boolean = isBlocked(address.address)
@@ -42,7 +42,10 @@ object AddressRules {
         else -> true
     }
 
-    /** The IPv4 address inside an IPv4-mapped (::ffff:a.b.c.d), IPv4-compatible (::a.b.c.d) or NAT64 (64:ff9b::/96) address. */
+    /**
+     * The IPv4 address inside an IPv4-mapped (::ffff:a.b.c.d), IPv4-compatible (::a.b.c.d) or NAT64
+     * (64:ff9b::/96) address. The local-use NAT64 range 64:ff9b:1::/48 is blocked as a whole above.
+     */
     private fun embeddedIpv4(bytes: ByteArray): ByteArray? {
         val zero = 0.toByte()
         val allZeroTo10 = (0..9).all { bytes[it] == zero }

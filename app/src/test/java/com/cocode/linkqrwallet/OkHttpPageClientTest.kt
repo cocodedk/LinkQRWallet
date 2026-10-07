@@ -2,22 +2,18 @@ package com.cocode.linkqrwallet
 
 import com.cocode.linkqrwallet.data.CheckedDns
 import com.cocode.linkqrwallet.data.OkHttpPageClient
-import java.io.FilterInputStream
+import com.cocode.linkqrwallet.data.TitleFetcher
 import java.io.IOException
-import java.io.InputStream
 import java.net.InetAddress
-import java.net.InetSocketAddress
-import java.net.Socket
-import java.util.concurrent.atomic.AtomicLong
-import javax.net.SocketFactory
 import okhttp3.Dns
+import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -129,37 +125,51 @@ class OkHttpPageClientTest {
     }
 
     @Test
-    fun aServerThatAsksForAnImmediateRetryIsAskedAtMostTwice() {
-        repeat(3) { server.enqueue(MockResponse().setResponseCode(503).setHeader("Retry-After", "0")) }
-        OkHttpPageClient(allowTestServer, isBlocked = { false }).get(url)
-        assertTrue("${server.requestCount} requests", server.requestCount <= 2)
-    }
-}
-
-/** Counts the bytes the client reads from its sockets. */
-private class CountingSocketFactory : SocketFactory() {
-    val bytesRead = AtomicLong()
-
-    private inner class CountingSocket : Socket() {
-        override fun getInputStream(): InputStream = object : FilterInputStream(super.getInputStream()) {
-            override fun read(): Int = super.read().also { if (it >= 0) bytesRead.incrementAndGet() }
-
-            override fun read(b: ByteArray, off: Int, len: Int): Int =
-                super.read(b, off, len).also { if (it > 0) bytesRead.addAndGet(it.toLong()) }
+    fun readsNoMoreThanTheHeadersOfAnythingThatIsNotAPage() {
+        val big = "x".repeat(3_000_000)
+        val answers = listOf(
+            MockResponse().setResponseCode(503).setHeader("Retry-After", "0").setBody(big),
+            MockResponse().setResponseCode(302).setHeader("Location", "${url}next").setBody(big),
+            MockResponse().setResponseCode(404).setBody(big),
+            MockResponse().setResponseCode(408).setBody(big)
+        )
+        for (response in answers) {
+            val other = MockWebServer()
+            other.start(loopback, 0)
+            try {
+                other.enqueue(response)
+                other.enqueue(page("<title>Second try</title>"))
+                val sockets = CountingSocketFactory()
+                val client = OkHttpPageClient(allowTestServer, isBlocked = { false }, socketFactory = sockets)
+                val answer = client.get("http://example.test:${other.port}/")
+                assertNull(answer.title)
+                assertEquals("one request, no retry", 1, other.requestCount)
+                assertTrue("status ${answer.status}: read ${sockets.bytesRead.get()} bytes", sockets.bytesRead.get() < 200_000)
+            } finally {
+                other.shutdown()
+            }
         }
     }
 
-    override fun createSocket(): Socket = CountingSocket()
+    @Test
+    fun readsTheStatusAndLocationOfARedirectWithoutItsBody() {
+        server.enqueue(MockResponse().setResponseCode(301).setHeader("Location", "${url}next").setBody("x".repeat(500_000)))
+        val answer = OkHttpPageClient(allowTestServer, isBlocked = { false }).get(url)
+        assertEquals(301, answer.status)
+        assertEquals("${url}next", answer.location)
+    }
 
-    override fun createSocket(host: String, port: Int): Socket =
-        CountingSocket().apply { connect(InetSocketAddress(host, port)) }
-
-    override fun createSocket(host: String, port: Int, local: InetAddress, localPort: Int): Socket =
-        CountingSocket().apply { bind(InetSocketAddress(local, localPort)); connect(InetSocketAddress(host, port)) }
-
-    override fun createSocket(host: InetAddress, port: Int): Socket =
-        CountingSocket().apply { connect(InetSocketAddress(host, port)) }
-
-    override fun createSocket(address: InetAddress, port: Int, local: InetAddress, localPort: Int): Socket =
-        CountingSocket().apply { bind(InetSocketAddress(local, localPort)); connect(InetSocketAddress(address, port)) }
+    @Test
+    fun aRedirectToAHostWhoseNameLeadsToALocalAddressIsNeverConnectedTo() {
+        // a.test may be reached (it stands for the test server), b.test leads to the same local address and may not
+        val refusing = CheckedDns { listOf(loopback) }
+        val dns = object : Dns {
+            override fun lookup(hostname: String) = if (hostname == "a.test") listOf(loopback) else refusing.lookup(hostname)
+        }
+        server.enqueue(MockResponse().setResponseCode(302).setHeader("Location", "http://b.test:${server.port}/page"))
+        server.enqueue(page("<title>Secret</title>"))
+        val fetcher = TitleFetcher(OkHttpPageClient(dns, isBlocked = { false }))
+        assertNull(runBlocking { fetcher.fetchTitle("http://a.test:${server.port}/") })
+        assertEquals(1, server.requestCount)
+    }
 }
