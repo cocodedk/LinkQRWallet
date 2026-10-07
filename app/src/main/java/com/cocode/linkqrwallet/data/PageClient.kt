@@ -66,10 +66,13 @@ class OkHttpPageClient(
         val call = http.newCall(request)
         try {
             call.execute().use { response ->
-                val answer = PageAnswer(response.code, title = readTitle(response))
-                // Closing a response would otherwise read the rest of the body first.
-                call.cancel()
-                return answer
+                try {
+                    return PageAnswer(response.code, title = readTitle(response))
+                } finally {
+                    // Closing a response would otherwise read the rest of the body first, even
+                    // when reading the title failed, so the call is cancelled before it closes.
+                    call.cancel()
+                }
             }
         } catch (ready: AnswerReady) {
             return ready.answer

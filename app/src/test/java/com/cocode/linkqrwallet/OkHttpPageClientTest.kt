@@ -9,6 +9,7 @@ import okhttp3.Dns
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okio.Buffer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -149,6 +150,17 @@ class OkHttpPageClientTest {
                 other.shutdown()
             }
         }
+    }
+
+    @Test
+    fun readsNoMoreOfAPageWhoseBodyCannotBeDecoded() {
+        // declares gzip but is not gzip, so reading the title fails with the rest of the body still unread
+        val body = Buffer().write("not gzip at all".toByteArray()).write(ByteArray(3_000_000) { 'x'.code.toByte() })
+        server.enqueue(page("").setHeader("Content-Encoding", "gzip").setBody(body))
+        val sockets = CountingSocketFactory()
+        val client = OkHttpPageClient(allowTestServer, isBlocked = { false }, socketFactory = sockets)
+        assertThrows(IOException::class.java) { client.get(url) }
+        assertTrue("read ${sockets.bytesRead.get()} bytes", sockets.bytesRead.get() < 200_000)
     }
 
     @Test
