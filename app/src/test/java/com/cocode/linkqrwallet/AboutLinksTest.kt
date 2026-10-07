@@ -10,14 +10,14 @@ import org.junit.Test
 
 class AboutLinksTest {
     private val id = "com.cocode.linkqrwallet"
-    private val notOnFdroid = AboutTargets(id, fdroidLive = false, privacyUrl = null)
-    private val onFdroid = AboutTargets(id, fdroidLive = true, privacyUrl = "https://qr.cocode.dk/privacy/")
+    private val notOnFdroid = AboutTargets(id, fdroidLive = false, privacyPublished = false)
+    private val onFdroid = AboutTargets(id, fdroidLive = true, privacyPublished = true)
 
     @Test
     fun updateOpensTheGithubReleaseUntilTheAppIsOnFdroid() {
         assertEquals(
             "https://github.com/cocodedk/LinkQRWallet/releases/latest",
-            aboutUrl(AboutLink.Update, notOnFdroid)
+            aboutUrl(AboutLink.Update, notOnFdroid, "en")
         )
     }
 
@@ -25,40 +25,54 @@ class AboutLinksTest {
     fun updateOpensTheFdroidPageOnceTheAppIsLive() {
         assertEquals(
             "https://f-droid.org/packages/com.cocode.linkqrwallet/",
-            aboutUrl(AboutLink.Update, onFdroid)
+            aboutUrl(AboutLink.Update, onFdroid, "en")
         )
     }
 
     @Test
     fun privacyIsAbsentWhileNoPolicyIsPublished() {
-        assertNull(aboutUrl(AboutLink.Privacy, notOnFdroid))
+        for (language in listOf("en", "da")) {
+            assertNull(aboutUrl(AboutLink.Privacy, notOnFdroid, language))
+        }
     }
 
     @Test
-    fun privacyOpensThePolicyOnceItIsPublished() {
-        assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, onFdroid))
-    }
-
-    private fun bothTargets(link: AboutLink) =
-        listOf(aboutUrl(link, notOnFdroid), aboutUrl(link, onFdroid))
-
-    @Test
-    fun websiteDoesNotDependOnTheTargets() {
-        assertEquals(List(2) { "https://qr.cocode.dk" }, bothTargets(AboutLink.Website))
+    fun englishOpensTheEnglishPages() {
+        assertEquals("https://qr.cocode.dk", aboutUrl(AboutLink.Website, onFdroid, "en"))
+        assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, onFdroid, "en"))
     }
 
     @Test
-    fun sourceDoesNotDependOnTheTargets() {
-        assertEquals(List(2) { "https://github.com/cocodedk/LinkQRWallet" }, bothTargets(AboutLink.Source))
+    fun danishOpensTheDanishPages() {
+        assertEquals("https://qr.cocode.dk/da/", aboutUrl(AboutLink.Website, onFdroid, "da"))
+        assertEquals("https://qr.cocode.dk/da/privacy/", aboutUrl(AboutLink.Privacy, onFdroid, "da"))
     }
 
     @Test
-    fun issuesDoNotDependOnTheTargets() {
-        assertEquals(List(2) { "https://github.com/cocodedk/LinkQRWallet/issues" }, bothTargets(AboutLink.Issues))
+    fun aLanguageTheSiteLacksOpensTheEnglishPages() {
+        for (language in listOf("fa", "de")) {
+            assertEquals("https://qr.cocode.dk", aboutUrl(AboutLink.Website, onFdroid, language))
+            assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, onFdroid, language))
+        }
+    }
+
+    private fun everyCase(link: AboutLink) = listOf(notOnFdroid, onFdroid).flatMap { targets ->
+        listOf("en", "da", "fa").map { aboutUrl(link, targets, it) }
+    }
+
+    @Test
+    fun sourceDoesNotDependOnTheTargetsOrTheLanguage() {
+        assertEquals(List(6) { "https://github.com/cocodedk/LinkQRWallet" }, everyCase(AboutLink.Source))
+    }
+
+    @Test
+    fun issuesDoNotDependOnTheTargetsOrTheLanguage() {
+        assertEquals(List(6) { "https://github.com/cocodedk/LinkQRWallet/issues" }, everyCase(AboutLink.Issues))
     }
 
     @Test
     fun thisBuildLinksThePublishedPrivacyPolicy() {
-        assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, appAboutTargets))
+        assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, appAboutTargets, "en"))
+        assertEquals("https://qr.cocode.dk/da/privacy/", aboutUrl(AboutLink.Privacy, appAboutTargets, "da"))
     }
 }

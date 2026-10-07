@@ -1,0 +1,1 @@
+Gem weblinks som QR-koder. Søg i dem og vis dem uden internet.

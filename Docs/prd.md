@@ -11,7 +11,7 @@ A personal Android app that turns URLs into QR codes and stores them as a search
 
 ### 3) Core use cases
 
-1. Paste a URL → generate QR → fetch page title → save.
+1. Paste a URL → generate QR → save → fetch page title in the background.
 2. Share a URL into the app from another app (browser, GitHub, Slack) → same flow.
 3. Browse saved QRs as a list or grid; sort and search.
 4. Tap an item → show QR full-screen + open URL.
@@ -50,7 +50,7 @@ A personal Android app that turns URLs into QR codes and stores them as a search
   * Local database, works offline
 * **Import via Android Share**
 
-  * “Share → Link Wallet QR” to create entry quickly
+  * “Share → Link QR Wallet” to create entry quickly
 
 ### Nice-to-have (v1.1+)
 
@@ -86,12 +86,12 @@ A personal Android app that turns URLs into QR codes and stores them as a search
 ### B) Add Link
 
 * URL input field
-* “Fetch Title” auto on paste/submit (with spinner)
+* No network request before Save; the page title is read in the background after Save, only if the title field was left empty
 * Preview card: Title (editable), domain
 * QR preview
 * Save button
 
-**Flow:** Paste URL → QR generates immediately → title fetch completes → Save
+**Flow:** Paste URL → QR generates immediately → Save → title fetch completes and replaces the domain
 
 ### C) Detail
 
@@ -174,7 +174,7 @@ A personal Android app that turns URLs into QR codes and stores them as a search
 
 ## 11) MVP acceptance criteria (done means)
 
-* You can add a URL, see QR and fetched title, and it persists after app restart.
+* You can add a URL, see the QR, and after saving see the fetched title; it persists after app restart.
 * Library shows all saved items, searchable and sortable.
 * Detail screen displays scannable QR and can open/copy/share/delete.
 * Sharing a URL from another app creates a saved item.

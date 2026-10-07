@@ -1,0 +1,1 @@
+Fjernet en tilladelse, appen aldrig brugte: at se din netværksstatus. Appen beder nu kun om kameraet, til at scanne QR-koder, og om internetadgang, til at slå en sides titel op.

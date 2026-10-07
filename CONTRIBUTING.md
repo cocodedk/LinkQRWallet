@@ -4,7 +4,7 @@ Built by [Cocode](https://cocode.dk).
 
 ## Local Setup
 1. Install Android Studio (latest stable) and Android SDK.
-2. Ensure Java 11 is available.
+2. Install JDK 17 and make sure Gradle uses it.
 3. Open the project and sync Gradle.
 
 ## Install Git Hooks

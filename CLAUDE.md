@@ -4,8 +4,8 @@
 
 Link QR Wallet is an Android app that turns URLs into QR codes and stores them in a searchable, sortable offline library. Users can add links (with auto-fetched page titles), generate QR codes, scan existing codes, and share QR images — all without any cloud backend.
 
-- **Language / Runtime**: Kotlin, Java 11, Android SDK
-- **Framework**: Jetpack Compose, Room (SQLite), ZXing QR, CameraX, ML Kit
+- **Language / Runtime**: Kotlin, Java 11 bytecode (build with JDK 17), Android SDK
+- **Framework**: Jetpack Compose, Room (SQLite), ZXing QR, CameraX
 - **Architecture**: Clean Architecture + MVVM (ViewModel → Repository → Room)
 - **Package / Namespace**: `com.cocode.linkqrwallet`
 

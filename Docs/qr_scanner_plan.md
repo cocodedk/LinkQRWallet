@@ -14,12 +14,12 @@ Use CameraX + ML Kit Barcode Scanning for reliable, fast detection and minimal U
 1. New "Scan" action (FAB menu or top bar button).
 2. Scanner screen opens, requests camera permission if needed.
 3. On successful scan:
-   - If payload is a valid URL -> show a confirm sheet with title fetch + Save.
+   - If payload is a valid URL -> show the Add screen with the address filled in; the title is fetched only after Save.
    - If not a URL -> show a friendly error with "Try again".
 
 ## Data handling
 - Reuse existing URL normalization (`UrlUtils.normalizeUrl`).
-- Reuse Add flow to avoid duplicating title fetch + duplicate detection.
+- Reuse Add flow to avoid duplicating the post-save title fetch + duplicate detection.
 - Add a safety check to block unsafe URLs before saving.
 
 ## Implementation steps
@@ -44,6 +44,6 @@ Use CameraX + ML Kit Barcode Scanning for reliable, fast detection and minimal U
    - Basic UI test for navigation to Add screen on scan result (mocked).
 
 ## Open questions
-- Where should the scan action live (top bar vs FAB)? the scan actoin must live there where the + is already.
+- Where should the scan action live (top bar vs FAB)? the scan action must appear in the existing + menu.
 - Save immediately or confirm first? Always confirm.
 - Should non-URL QR payloads be saved as notes or ignored? ignored for now
