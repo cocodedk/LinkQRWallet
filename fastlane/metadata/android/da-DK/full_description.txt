@@ -1,6 +1,6 @@
 Link QR Wallet gemmer dine weblinks på din telefon og viser hvert link som en QR-kode. En QR-kode er et firkantet billede, som et telefonkamera kan læse for at åbne et link.
 
-Du tilføjer et link ved at skrive eller indsætte en webadresse, scanne en QR-kode eller sende et link til appen fra en anden app. Appen slår sidens titel op for dig, og du kan rette den. Du kan søge i dine gemte links efter titel, webadresse eller websteds navn, sortere dem efter titel, websted eller dato for tilføjelse, åbne eller kopiere et link og dele dets QR-kode som billede.
+Du tilføjer et link ved at skrive eller indsætte en webadresse, scanne en QR-kode eller sende et link til appen fra en anden app. Appen slår sidens titel op for dig, og du kan rette den. Du kan søge i dine gemte links efter titel, webadresse eller webstedets navn, sortere dem efter titel, websted eller dato for tilføjelse, åbne eller kopiere et link og dele dets QR-kode som billede.
 
 Dine gemte links ligger på din telefon, så du kan søge i dem og vise deres QR-koder uden internet. Det kræver internet at slå en sides titel op.
 
