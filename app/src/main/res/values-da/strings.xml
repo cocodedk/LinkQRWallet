@@ -79,7 +79,7 @@
     <string name="about_links_title">Links</string>
     <string name="about_website">Åbn hjemmesiden</string>
     <string name="about_source">Se kildekoden på GitHub</string>
-    <string name="about_report">Meld et problem på GitHub</string>
+    <string name="about_report">Meld en fejl på GitHub</string>
     <string name="about_no_browser">Ingen app på din telefon kan åbne dette link. Installér en webbrowser, og prøv igen.</string>
     <string name="about_credits">Tak og licenser</string>
     <string name="about_license">Link QR Wallet er fri software. Den er udgivet under MIT-licensen, som giver dig lov til at bruge, kopiere, ændre og dele den.</string>
