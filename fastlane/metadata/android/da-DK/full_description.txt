@@ -1,0 +1,5 @@
+Link QR Wallet gør webadresser til QR-koder og gemmer dem i et søgbart og sorterbart bibliotek på enheden. Tilføj et link, så henter appen automatisk sidens titel og laver en QR-kode, som du kan dele som billede eller scanne igen.
+
+Du kan søge i links og sortere dem efter titel, domæne eller dato. En indbygget scanner læser eksisterende QR-koder, så koder fra andre steder kan lægges ind i det samme bibliotek.
+
+Alle data gemmes lokalt, og intet sendes til en server. Appen bruger kun kameraet til at scanne QR-koder og kun netværket til at hente en sides titel, når du tilføjer et link.

@@ -1,0 +1,1 @@
+Fjernet en tilladelse til netværksstatus, som appen aldrig brugte. Den fulgte med et kamerabibliotek og er nu væk, så appen kun beder om kameraet og om internetadgang til at læse en sides titel.
