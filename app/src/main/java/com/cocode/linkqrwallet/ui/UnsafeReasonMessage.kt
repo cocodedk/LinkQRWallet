@@ -9,8 +9,7 @@ import com.cocode.linkqrwallet.data.UnsafeReason
 fun UnsafeReason?.messageRes(): Int = when (this) {
     UnsafeReason.Invalid -> R.string.block_invalid
     UnsafeReason.NoScheme -> R.string.block_no_scheme
-    UnsafeReason.UnsafeScheme -> R.string.block_unsafe_scheme
-    UnsafeReason.NotHttp -> R.string.block_not_http
+    UnsafeReason.UnsafeScheme, UnsafeReason.NotHttp -> R.string.block_not_http
     UnsafeReason.NoHost -> R.string.block_no_host
     UnsafeReason.Local -> R.string.block_local
     UnsafeReason.Onion -> R.string.block_onion

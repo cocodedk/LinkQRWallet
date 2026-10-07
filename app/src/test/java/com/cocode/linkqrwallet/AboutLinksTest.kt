@@ -3,6 +3,7 @@ package com.cocode.linkqrwallet
 import com.cocode.linkqrwallet.ui.screens.AboutLink
 import com.cocode.linkqrwallet.ui.screens.AboutTargets
 import com.cocode.linkqrwallet.ui.screens.aboutUrl
+import com.cocode.linkqrwallet.ui.screens.appAboutTargets
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -38,12 +39,26 @@ class AboutLinksTest {
         assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, onFdroid))
     }
 
+    private fun bothTargets(link: AboutLink) =
+        listOf(aboutUrl(link, notOnFdroid), aboutUrl(link, onFdroid))
+
     @Test
-    fun websiteSourceAndIssuesDoNotDependOnTheTargets() {
-        for (targets in listOf(notOnFdroid, onFdroid)) {
-            assertEquals("https://qr.cocode.dk", aboutUrl(AboutLink.Website, targets))
-            assertEquals("https://github.com/cocodedk/LinkQRWallet", aboutUrl(AboutLink.Source, targets))
-            assertEquals("https://github.com/cocodedk/LinkQRWallet/issues", aboutUrl(AboutLink.Issues, targets))
-        }
+    fun websiteDoesNotDependOnTheTargets() {
+        assertEquals(List(2) { "https://qr.cocode.dk" }, bothTargets(AboutLink.Website))
+    }
+
+    @Test
+    fun sourceDoesNotDependOnTheTargets() {
+        assertEquals(List(2) { "https://github.com/cocodedk/LinkQRWallet" }, bothTargets(AboutLink.Source))
+    }
+
+    @Test
+    fun issuesDoNotDependOnTheTargets() {
+        assertEquals(List(2) { "https://github.com/cocodedk/LinkQRWallet/issues" }, bothTargets(AboutLink.Issues))
+    }
+
+    @Test
+    fun thisBuildLinksThePublishedPrivacyPolicy() {
+        assertEquals("https://qr.cocode.dk/privacy/", aboutUrl(AboutLink.Privacy, appAboutTargets))
     }
 }

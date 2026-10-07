@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Link QR Wallet</string>
 
     <!-- Shared labels -->
@@ -15,8 +15,8 @@
     <string name="library_sort_description">Sort links</string>
     <string name="library_add_description">Add a link or scan a QR code</string>
     <string name="library_search">Search</string>
-    <string name="library_empty_title">No saved links yet</string>
-    <string name="library_empty_body">Tap the + button to add a link or scan a QR code.</string>
+    <string name="library_empty_title">No links to show</string>
+    <string name="library_empty_body">To add a link, tap the + button. If you searched, change or clear your search.</string>
     <string name="library_sorted_by">Sorted by: %1$s</string>
 
     <!-- Sort options -->
@@ -48,21 +48,20 @@
     <!-- Scan -->
     <string name="scan_permission_needed">To scan QR codes, the app needs to use your camera. The camera picture is read on your phone and is never saved or sent anywhere.</string>
     <string name="scan_grant_permission">Allow camera access</string>
-    <string name="scan_hint">Point your camera at a QR code.</string>
+    <string name="scan_hint">Point your camera at a QR code with a web link. The app then shows the link so you can check it before saving.</string>
 
     <!-- Messages when a link is refused -->
     <string name="error_enter_url">Enter a web address, such as example.com.</string>
     <string name="error_qr_no_url">This QR code does not contain a web address.</string>
-    <string name="error_url_blocked">This link is blocked for your safety.</string>
+    <string name="error_url_blocked">This link cannot be saved.</string>
     <string name="block_invalid">This is not a valid web address.</string>
     <string name="block_no_scheme">The web address must start with http:// or https://.</string>
-    <string name="block_unsafe_scheme">This type of link is blocked for your safety. Only links that start with http:// or https:// can be saved.</string>
-    <string name="block_not_http">Only links that start with http:// or https:// can be saved.</string>
+    <string name="block_not_http">This type of link cannot be saved. Enter a web address that starts with http:// or https://.</string>
     <string name="block_no_host">The web address needs a website name, such as example.com.</string>
-    <string name="block_local">This address points to your own phone or a local network, so it is blocked.</string>
-    <string name="block_onion">Addresses ending in .onion (Tor hidden services) are blocked.</string>
-    <string name="block_private">This address belongs to a private network, so it is blocked.</string>
-    <string name="block_encoded_name">This website name uses international characters in an encoded form. It is blocked because such names can imitate other websites.</string>
+    <string name="block_local">This link points to your own phone or a local network, so it cannot be saved.</string>
+    <string name="block_onion">Links ending in .onion cannot be saved.</string>
+    <string name="block_private">This link goes to a local, private or reserved IP address (a number such as 192.168.1.1), so it cannot be saved.</string>
+    <string name="block_encoded_name" tools:ignore="TypographyDashes">The app cannot save links to websites whose name starts with xn--. This is how names with letters such as æ, ö or ü are written in a web address.</string>
 
     <!-- About -->
     <string name="about_title">About</string>
@@ -74,7 +73,7 @@
     <string name="about_privacy_title">Privacy</string>
     <string name="about_privacy_local">Your saved links stay on your phone. The app has no account, no ads, no analytics and no tracking, and it never sends your links to Cocode.</string>
     <string name="about_privacy_camera">The camera is used only while the Scan QR code screen is open. The camera picture is read on your phone and is never saved or sent. The app keeps the text of a QR code only if you choose to save it as a link.</string>
-    <string name="about_privacy_internet">The app uses the internet for one thing: when you add a link, it asks that website for its page title. The request goes straight from your phone to that website, and the website can see your phone\'s IP address, the number that identifies your connection on the internet.</string>
+    <string name="about_privacy_internet">The app uses the internet for one thing: reading the page title of a link you add. As soon as you type or paste a web address, the app asks that website for its title, even before you save the link. The request goes straight from your phone to that website, and the website can see your phone\'s IP address, the number that identifies your connection on the internet.</string>
     <string name="about_privacy_backup">If you have turned on Android backup, Android may include this app\'s data in your own backup. Cocode has no access to it.</string>
     <string name="about_privacy_link">Read the privacy policy</string>
     <string name="about_links_title">Links</string>
@@ -84,6 +83,11 @@
     <string name="about_no_browser">No app on your phone can open this link. Install a web browser, then try again.</string>
     <string name="about_credits">Credits and licenses</string>
     <string name="about_license">Link QR Wallet is free software. It is released under the MIT license, which lets you use, copy, change and share it.</string>
+    <string name="about_credits_intro">The app is built with these libraries made by others. Each one is followed by its license.</string>
+    <string name="credit_zxing">ZXing: creates and reads QR codes (Apache-2.0).</string>
+    <string name="credit_jsoup">jsoup: reads the page title of a website (MIT).</string>
+    <string name="credit_androidx">AndroidX and Jetpack Compose: the screens, the saved links (Room) and the camera (CameraX) (Apache-2.0).</string>
+    <string name="credit_kotlin">Kotlin and kotlinx.coroutines: the language the app is written in, and its support for background tasks (Apache-2.0).</string>
     <string name="about_made_by">Made by Cocode (cocode.dk)</string>
     <string name="about_made_by_name" translatable="false">Babak Bandpey</string>
     <string name="about_made_by_email" translatable="false">bb@cocode.dk</string>

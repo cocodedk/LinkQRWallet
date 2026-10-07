@@ -28,11 +28,24 @@ class UrlSafetyTest {
 
     @Test
     fun saysWhyALinkWasRefused() {
-        assertEquals(UnsafeReason.UnsafeScheme, UrlSafety.check("javascript:alert(1)").reason)
-        assertEquals(UnsafeReason.NotHttp, UrlSafety.check("ftp://example.com").reason)
-        assertEquals(UnsafeReason.Local, UrlSafety.check("http://localhost").reason)
-        assertEquals(UnsafeReason.Onion, UrlSafety.check("http://example.onion").reason)
-        assertEquals(UnsafeReason.Private, UrlSafety.check("http://10.0.0.5").reason)
-        assertEquals(UnsafeReason.EncodedName, UrlSafety.check("http://xn--80ak6aa92e.com").reason)
+        val urls = listOf(
+            "javascript:alert(1)",
+            "ftp://example.com",
+            "http://localhost",
+            "http://example.onion",
+            "http://10.0.0.5",
+            "http://xn--80ak6aa92e.com"
+        )
+        assertEquals(
+            listOf(
+                UnsafeReason.UnsafeScheme,
+                UnsafeReason.NotHttp,
+                UnsafeReason.Local,
+                UnsafeReason.Onion,
+                UnsafeReason.Private,
+                UnsafeReason.EncodedName
+            ),
+            urls.map { UrlSafety.check(it).reason }
+        )
     }
 }

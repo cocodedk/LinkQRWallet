@@ -16,11 +16,11 @@ data class AboutTargets(
 private const val SITE = "https://qr.cocode.dk"
 private const val REPO = "https://github.com/cocodedk/LinkQRWallet"
 
-/** The targets this build uses. Flip [AboutTargets.fdroidLive] and set the privacy URL when they exist. */
+/** The targets this build uses. Set [AboutTargets.fdroidLive] to true once the app is live on F-Droid. */
 val appAboutTargets = AboutTargets(
     applicationId = BuildConfig.APPLICATION_ID,
     fdroidLive = false,
-    privacyUrl = null
+    privacyUrl = "https://qr.cocode.dk/privacy/"
 )
 
 /** Where [link] points, or null when it has no target (the privacy policy before it is published). */

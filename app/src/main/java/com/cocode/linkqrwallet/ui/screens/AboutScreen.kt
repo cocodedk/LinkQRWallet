@@ -14,14 +14,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -31,6 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.cocode.linkqrwallet.BuildConfig
 import com.cocode.linkqrwallet.R
+import kotlinx.coroutines.launch
+
+private val credits = listOf(
+    R.string.credit_zxing,
+    R.string.credit_jsoup,
+    R.string.credit_androidx,
+    R.string.credit_kotlin
+)
 
 @Composable
 private fun SectionTitle(@StringRes title: Int) = Text(
@@ -59,13 +68,18 @@ private fun openLink(context: Context, url: String): Boolean = try {
 @Composable
 fun AboutScreen(onBack: () -> Unit, targets: AboutTargets = appAboutTargets) {
     val context = LocalContext.current
-    var noBrowser by rememberSaveable { mutableStateOf(false) }
+    val snackbar = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val noBrowser = stringResource(R.string.about_no_browser)
     val open = { link: AboutLink ->
         val url = aboutUrl(link, targets)
-        noBrowser = url != null && !openLink(context, url)
+        if (url != null && !openLink(context, url)) {
+            scope.launch { snackbar.showSnackbar(noBrowser, duration = SnackbarDuration.Long) }
+        }
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbar) },
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.about_title)) },
@@ -111,11 +125,12 @@ fun AboutScreen(onBack: () -> Unit, targets: AboutTargets = appAboutTargets) {
             LinkButton(R.string.about_website) { open(AboutLink.Website) }
             LinkButton(R.string.about_source) { open(AboutLink.Source) }
             LinkButton(R.string.about_report) { open(AboutLink.Issues) }
-            if (noBrowser) Body(R.string.about_no_browser)
 
             // 5. Credits and licenses.
             SectionTitle(R.string.about_credits)
             Body(R.string.about_license)
+            Body(R.string.about_credits_intro)
+            credits.forEach { Text(text = stringResource(it), style = MaterialTheme.typography.bodyMedium) }
 
             // 6. Made by Cocode.
             SectionTitle(R.string.about_made_by)
