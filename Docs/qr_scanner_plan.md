@@ -44,6 +44,6 @@ Use CameraX + ML Kit Barcode Scanning for reliable, fast detection and minimal U
    - Basic UI test for navigation to Add screen on scan result (mocked).
 
 ## Open questions
-- Where should the scan action live (top bar vs FAB)? the scan actoin must live there where the + is already.
+- Where should the scan action live (top bar vs FAB)? the scan action must appear in the existing + menu.
 - Save immediately or confirm first? Always confirm.
 - Should non-URL QR payloads be saved as notes or ignored? ignored for now

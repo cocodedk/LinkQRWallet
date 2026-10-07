@@ -50,7 +50,7 @@ A personal Android app that turns URLs into QR codes and stores them as a search
   * Local database, works offline
 * **Import via Android Share**
 
-  * “Share → Link Wallet QR” to create entry quickly
+  * “Share → Link QR Wallet” to create entry quickly
 
 ### Nice-to-have (v1.1+)
 

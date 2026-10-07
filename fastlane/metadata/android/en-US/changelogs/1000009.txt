@@ -1,1 +1,1 @@
-Smaller download: release builds are now shrunk with R8.
+Reduced the app's download size.

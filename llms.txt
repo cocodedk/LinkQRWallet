@@ -1,25 +1,25 @@
 # Link QR Wallet
 
-> Android app that turns URLs into QR codes and stores them in a searchable, sortable offline library.
+> Android app that saves web links on your phone and shows each one as a QR code. Saved links can be searched, sorted and shown without an internet connection.
 
 ## What it does
 
-Link QR Wallet lets users save links as QR codes for quick access. Add a URL and the app auto-fetches the page title; a QR code is generated and stored locally. Users can search and sort their library, scan existing QR codes to import them, and share QR images. Everything is stored offline — no account or cloud sync required.
+Link QR Wallet lets users save web links and show each one as a QR code. Add a web address and the app looks up the page title. The app stores links and titles on the phone and generates QR images when you display or share them. Users can search and sort their library, scan QR codes to save the link inside, and share QR images. No account is needed, and the library can be browsed without an internet connection. Looking up a page title contacts the link's website as soon as the address is typed, pasted, scanned or shared, even before the link is saved.
 
 ## Key features
 
-- Add links with auto-fetched page titles
-- Generate and display QR codes for any URL
-- QR scanner to import existing codes (CameraX + ML Kit)
-- Search and sort by title, domain, or date
+- Add links with looked-up page titles
+- Generate and display QR codes for supported HTTP and HTTPS web links
+- QR scanner to import web links using CameraX and ZXing
+- Search by title, URL, or domain; sort by title, domain, or date added
 - Share QR images via Android share intent
-- Local database (Room/SQLite), fully offline-first
-- No account, no cloud, no tracking
+- Local database (Room/SQLite); saved links can be browsed and shown without an internet connection
+- No app account, app-managed cloud sync, analytics or tracking. Android may back up your library according to your device settings.
 
 ## Architecture
 
 - Language: Kotlin
-- Framework: Jetpack Compose, Room, CameraX, ML Kit, ZXing
+- Frameworks and libraries: Jetpack Compose, Room, CameraX, ZXing, and Jsoup
 - Architecture: Clean Architecture + MVVM
 - Build tool: Gradle (Kotlin DSL)
 - Min SDK: Android 7.0 (API 24)
@@ -35,4 +35,4 @@ Babak Bandpey — https://cocode.dk | https://linkedin.com/in/babakbandpey | htt
 
 ## License
 
-Apache-2.0
+MIT

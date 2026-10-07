@@ -1,0 +1,92 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Link QR Wallet</string>
+
+    <!-- Shared labels -->
+    <string name="action_back">Tilbage</string>
+    <string name="action_cancel">Annuller</string>
+    <string name="action_save">Gem</string>
+    <string name="action_delete">Slet</string>
+    <string name="action_add_link">Tilføj link</string>
+    <string name="action_scan_qr">Scan QR-kode</string>
+    <string name="field_title">Titel</string>
+    <string name="qr_code_description">QR-kode</string>
+
+    <!-- Library -->
+    <string name="library_sort_description">Sortér links</string>
+    <string name="library_add_description">Tilføj et link eller scan en QR-kode</string>
+    <string name="library_search">Søg</string>
+    <string name="library_empty_title">Ingen links at vise</string>
+    <string name="library_empty_body">Tryk på +-knappen for at tilføje et link. Hvis du har søgt, kan du ændre eller rydde søgningen.</string>
+    <string name="library_sorted_by">Sorteret efter: %1$s</string>
+
+    <!-- Sort options -->
+    <string name="sort_newest">Nyeste først</string>
+    <string name="sort_oldest">Ældste først</string>
+    <string name="sort_title_asc">Titel A-Z</string>
+    <string name="sort_title_desc">Titel Z-A</string>
+    <string name="sort_website_asc">Websted A-Z</string>
+
+    <!-- Add link -->
+    <string name="add_url_label">Webadresse (URL)</string>
+    <string name="add_qr_preview_description">Forhåndsvisning af QR-koden</string>
+    <string name="add_website_placeholder">Webstedets navn vises her</string>
+    <string name="add_fetch_title">Hent sidens titel</string>
+    <string name="add_duplicate_title">Allerede gemt</string>
+    <string name="add_duplicate_body">Dette link er allerede gemt i dit bibliotek. Vil du gemme en ekstra kopi?</string>
+    <string name="add_duplicate_confirm">Gem en ekstra kopi</string>
+
+    <!-- Link details -->
+    <string name="detail_title">Linkdetaljer</string>
+    <string name="detail_loading">Henter…</string>
+    <string name="detail_open">Åbn link</string>
+    <string name="detail_copy">Kopiér link</string>
+    <string name="detail_share">Del QR-kode</string>
+    <string name="detail_delete">Slet link</string>
+    <string name="detail_delete_title">Slet link?</string>
+    <string name="detail_delete_body">Linket fjernes for altid fra dit bibliotek. Det kan ikke fortrydes.</string>
+
+    <!-- Scan -->
+    <string name="scan_permission_needed">For at scanne QR-koder skal appen bruge dit kamera. Kamerabilledet læses på din telefon og bliver aldrig gemt eller sendt nogen steder hen.</string>
+    <string name="scan_grant_permission">Tillad adgang til kameraet</string>
+    <string name="scan_hint">Ret kameraet mod en QR-kode med et weblink. Appen viser derefter linket, så du kan tjekke det, før du gemmer det.</string>
+
+    <!-- Messages when a link is refused -->
+    <string name="error_enter_url">Skriv en webadresse, for eksempel example.com.</string>
+    <string name="error_qr_no_url">Denne QR-kode indeholder ikke en webadresse.</string>
+    <string name="error_url_blocked">Dette link kan ikke gemmes.</string>
+    <string name="block_invalid">Det er ikke en gyldig webadresse.</string>
+    <string name="block_no_scheme">Webadressen skal begynde med http:// eller https://.</string>
+    <string name="block_not_http">Denne type link kan ikke gemmes. Skriv en webadresse, der begynder med http:// eller https://.</string>
+    <string name="block_no_host">Webadressen skal indeholde navnet på et websted, for eksempel example.com.</string>
+    <string name="block_local">Dette link peger på din egen telefon eller et lokalt netværk og kan derfor ikke gemmes.</string>
+    <string name="block_onion">Links, der ender på .onion, kan ikke gemmes.</string>
+    <string name="block_private">Dette link går til en lokal, privat eller reserveret IP-adresse (et tal som 192.168.1.1) og kan derfor ikke gemmes.</string>
+    <string name="block_encoded_name" tools:ignore="TypographyDashes">Appen kan ikke gemme links til websteder, hvis navn begynder med xn--. Sådan skrives navne med bogstaver som æ, ö eller ü i en webadresse.</string>
+
+    <!-- About -->
+    <string name="about_title">Om</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_check_updates">Se den nyeste version</string>
+    <string name="about_update_note">Appen leder ikke selv efter opdateringer. Knappen åbner siden med nye versioner, så du kan se, om din er den nyeste.</string>
+    <string name="about_what_title">Hvad appen kan</string>
+    <string name="about_what_body">Link QR Wallet gemmer dine weblinks på din telefon og viser hvert link som en QR-kode. En QR-kode er et firkantet billede, som et telefonkamera kan læse for at åbne et link. Du kan søge i dine gemte links og sortere dem, scanne en QR-kode for at gemme det link, der ligger i den, og dele en QR-kode som billede.</string>
+    <string name="about_privacy_title">Privatliv</string>
+    <string name="about_privacy_local">Dine gemte links bliver på din telefon. Appen har ingen konto, ingen reklamer, ingen brugerstatistik og ingen sporing, og den sender aldrig dine links til Cocode.</string>
+    <string name="about_privacy_camera">Kameraet bruges kun, mens skærmen Scan QR-kode er åben. Kamerabilledet læses på din telefon og bliver aldrig gemt eller sendt. Appen beholder kun teksten fra en QR-kode, hvis du vælger at gemme den som et link.</string>
+    <string name="about_privacy_internet">Appen bruger internettet til én ting: at læse titlen på siden bag et link, du tilføjer. Så snart du skriver eller indsætter en webadresse, spørger appen webstedet om dets titel, også før du har gemt linket. Forespørgslen går direkte fra din telefon til webstedet, og webstedet kan se din telefons IP-adresse, det tal, der identificerer din forbindelse på internettet.</string>
+    <string name="about_privacy_backup">Hvis du har slået Android-sikkerhedskopiering til, kan Android tage appens data med i din egen sikkerhedskopi. Cocode har ikke adgang til den.</string>
+    <string name="about_privacy_link">Læs privatlivspolitikken</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_website">Åbn hjemmesiden</string>
+    <string name="about_source">Se kildekoden på GitHub</string>
+    <string name="about_report">Meld et problem på GitHub</string>
+    <string name="about_no_browser">Ingen app på din telefon kan åbne dette link. Installér en webbrowser, og prøv igen.</string>
+    <string name="about_credits">Tak og licenser</string>
+    <string name="about_license">Link QR Wallet er fri software. Den er udgivet under MIT-licensen, som giver dig lov til at bruge, kopiere, ændre og dele den.</string>
+    <string name="about_credits_intro">Appen er bygget med disse kodebiblioteker, som andre har lavet. Efter hvert bibliotek står dets licens.</string>
+    <string name="credit_zxing">ZXing: laver og læser QR-koder (Apache-2.0).</string>
+    <string name="credit_jsoup">jsoup: læser titlen på et websted (MIT).</string>
+    <string name="credit_androidx">AndroidX og Jetpack Compose: skærmene, de gemte links (Room) og kameraet (CameraX) (Apache-2.0).</string>
+    <string name="credit_kotlin">Kotlin og kotlinx.coroutines: det sprog, appen er skrevet i, og dets støtte til opgaver i baggrunden (Apache-2.0).</string>
+    <string name="about_made_by">Lavet af Cocode (cocode.dk)</string>
+</resources>

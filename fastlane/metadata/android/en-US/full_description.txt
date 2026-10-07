@@ -1,5 +1,7 @@
-Link QR Wallet turns URLs into QR codes and stores them in a searchable, sortable library on the device. Add a link and the app automatically fetches the page title, then generates a QR code that can be shared as an image or scanned back in.
+Link QR Wallet saves your web links on your phone and shows each one as a QR code. A QR code is a square picture that a phone camera can read to open a link.
 
-Links can be searched and sorted by title, domain, or date. A built-in scanner reads existing QR codes so codes made elsewhere can be imported into the same library.
+To add a link, type or paste a web address, scan a QR code, or send a link to the app from another app. The app looks up the page's title for you, and you can change it. You can search your saved links by title, web address or website name, sort them by title, website or date added, open or copy a link, and share its QR code as a picture.
 
-All data is stored locally; nothing is sent to a server. The app uses the camera only to scan QR codes and the network only to fetch a page's title when a link is added.
+Your saved links are stored on your phone, so you can search them and show their QR codes without internet. Looking up a page title needs internet.
+
+The app has no account, no ads and no tracking. The camera is used only while you scan a QR code, and the picture is read on your phone and never saved or sent. As soon as you type or paste a web address, the app asks that website for its page title, even before you save the link, and the website can see your phone's IP address (the number that identifies your connection on the internet). If Android backup is turned on, Android may include your saved links in your own backup.

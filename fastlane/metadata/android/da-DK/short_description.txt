@@ -1,1 +1,1 @@
-Gør links til QR-koder, og gem dem i et søgbart bibliotek uden internet
+Gem weblinks som QR-koder. Søg i dem og vis dem uden internet.

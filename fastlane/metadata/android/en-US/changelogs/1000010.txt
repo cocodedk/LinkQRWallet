@@ -1,1 +1,1 @@
-Dropped a network-state permission the app never used. It came from a camera library and is now removed, so the app asks only for the camera and for internet access to read a page title.
+Removed a permission the app never used: seeing your network status. The app now asks only for the camera, to scan QR codes, and for internet access, to look up a page title.
