@@ -38,15 +38,15 @@ object UrlSafety {
         if (scheme != "http" && scheme != "https") {
             return UrlSafetyResult(false, UnsafeReason.NotHttp)
         }
-        val host = uri.host?.lowercase() ?: return UrlSafetyResult(false, UnsafeReason.NoHost)
+        val host = uri.host?.lowercase()?.trimEnd('.') ?: return UrlSafetyResult(false, UnsafeReason.NoHost)
         if (host in blockedHosts || host.endsWith(".local")) {
             return UrlSafetyResult(false, UnsafeReason.Local)
         }
         if (host.endsWith(".onion")) {
             return UrlSafetyResult(false, UnsafeReason.Onion)
         }
-        val ipv4 = parseIpv4(host)
-        if (ipv4 != null && AddressRules.isBlockedIpv4(ipv4)) {
+        val ipv4 = parseNumericIpv4(host)
+        if (ipv4 != null && AddressRules.isBlocked(ipv4)) {
             return UrlSafetyResult(false, UnsafeReason.Private)
         }
         if (host.startsWith("[") && host.endsWith("]") && isBlockedIpv6Literal(host)) {
@@ -65,17 +65,31 @@ object UrlSafety {
         true
     }
 
-    private fun parseIpv4(host: String): IntArray? {
+    /**
+     * Reads [host] as a numeric IPv4 address the way the system does, so 127.0.0.1, 127.1,
+     * 2130706433, 0x7f.0.0.1 and 0177.0.0.1 all give the same bytes. Anything else gives null.
+     */
+    private fun parseNumericIpv4(host: String): ByteArray? {
         val parts = host.split(".")
-        if (parts.size != 4) return null
-        val bytes = IntArray(4)
-        for (i in 0..3) {
-            val part = parts[i]
-            if (part.isEmpty() || part.length > 3) return null
-            val value = part.toIntOrNull() ?: return null
-            if (value < 0 || value > 255) return null
-            bytes[i] = value
+        if (parts.size > 4) return null
+        val numbers = parts.map { parseIpv4Part(it) ?: return null }
+        val last = numbers.last()
+        val leading = numbers.dropLast(1)
+        if (leading.any { it > 255 } || last >= (1L shl (8 * (5 - parts.size)))) return null
+        var value = last
+        leading.forEachIndexed { index, number -> value = value or (number shl (24 - 8 * index)) }
+        return ByteArray(4) { ((value shr (24 - 8 * it)) and 0xFF).toByte() }
+    }
+
+    private fun parseIpv4Part(part: String): Long? {
+        val hex = part.startsWith("0x") || part.startsWith("0X")
+        val digits = if (hex) part.substring(2) else part
+        if (digits.isEmpty() || !digits.all { it.isLetterOrDigit() }) return null
+        val radix = when {
+            hex -> 16
+            digits.length > 1 && digits.startsWith("0") -> 8
+            else -> 10
         }
-        return bytes
+        return digits.toLongOrNull(radix)
     }
 }
