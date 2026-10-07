@@ -39,56 +39,58 @@
     <main id="main" tabindex="-1" class="wrap">
       <article class="card prose">
         <h1>Privacy policy - Link QR Wallet</h1>
-        <p class="meta">Effective <time datetime="2026-10-07">7 October 2026</time>. This policy describes the app as it is in version 1.0.10 (<code>com.cocode.linkqrwallet</code>).</p>
+        <p class="meta">Effective <time datetime="2026-10-07">7 October 2026</time>. This policy describes version 1.0.10 of the app (<code>com.cocode.linkqrwallet</code>).</p>
 
         <h2>Summary</h2>
-        <p>Link QR Wallet keeps the links you save on your phone. It has no account, no server run by us, no analytics and no ads, and it sends us nothing. The app uses the internet for one thing: when you add a link, it asks the website that link points to for the page title. That website can see the request.</p>
+        <p>Link QR Wallet keeps the links you save on your phone. We run no server for it, and it has no accounts, no analytics and no ads. The app sends us nothing.</p>
+        <p>The app uses the internet for one thing. When you add a link, it contacts the website that link points to and reads the page's title, so your list shows a name instead of a web address. That website can see the request.</p>
 
         <h2>What is collected</h2>
-        <p>We collect nothing. The app has no way to send anything to us. What the app handles, on your phone, is this:</p>
+        <p>We collect nothing, because the app has no way to send anything to us. On your phone, the app handles:</p>
         <ul>
-          <li><strong>Links you save.</strong> For each one, the address, a title, the domain (for example <code>example.com</code>) and the times it was added and last changed.</li>
-          <li><strong>Addresses you type, paste, scan or share into the app.</strong> These are kept only if you tap Save.</li>
-          <li><strong>Camera pictures while the scanner is open.</strong> The app reads QR codes from them and keeps them only in memory. They are never saved and never sent anywhere.</li>
+          <li><strong>Links you save.</strong> For each link: the address, a title, the domain (the website's name, for example <code>example.com</code>) and the times you added and last changed it.</li>
+          <li><strong>Addresses you type, paste, scan or share into the app.</strong> The app keeps one only if you tap “Save”.</li>
+          <li><strong>Camera pictures while the scanner is open.</strong> The app reads QR codes (square patterns that can hold a web address) from them. The pictures stay in memory only. The app never saves or sends them.</li>
         </ul>
-        <p>The app has no account and never asks for your name, email address or phone number.</p>
+        <p>The app has no account. It never asks for your name, email address or phone number.</p>
 
         <h2>Servers the app contacts</h2>
-        <p>Only one kind: the website of a link you are adding. The app asks it for the page and reads the page's title. There is no server of ours in between, and the app contacts no other server.</p>
+        <p>Only one kind: the website of a link you add. The app asks that website for the page and reads its title, which is the name your browser shows on the page's tab. The app does this so your list shows names you can recognise. No server of ours is involved, and the app contacts no other server.</p>
         <ul>
-          <li><strong>When.</strong> As soon as the add screen holds an address: after you type or paste one and pause for about half a second, when you scan one, when another app shares one into Link QR Wallet, or when you tap Fetch Title. This happens before you tap Save, so the website is contacted even if you then cancel.</li>
-          <li><strong>What the website sees.</strong> An ordinary web request from your phone that names the app as <code>LinkQRWallet/1.0</code>, plus your IP address and the time, as with any web request. If you leave off the start of an address, the app adds <code>https://</code>. If the website sends the app on to another address, the app follows, and that address sees the request too.</li>
-          <li><strong>What the app keeps.</strong> The title, and nothing else from the page. If the website does not answer within about 8 seconds, or the request fails, the app uses the domain as the title, and you can still save the link.</li>
-          <li><strong>What the app refuses.</strong> An address you scan is checked before it reaches the add screen, and an address is checked again when you tap Save. The check refuses anything that is not <code>http</code> or <code>https</code>, <code>localhost</code>, names ending in <code>.local</code> or <code>.onion</code>, names starting with <code>xn--</code>, and private or reserved IPv4 addresses. An address you type, paste or share in is looked up for its title before that check runs, so the lookup can reach such an address if you enter one.</li>
+          <li><strong>When it happens.</strong> As soon as the “Add Link” screen holds an address. That is when you type or paste one and pause for about half a second, scan a QR code, share a link into the app from another app, or tap “Fetch Title”. It happens before you tap “Save”, so the website is contacted even if you then cancel.</li>
+          <li><strong>What the website sees.</strong> An ordinary web request from your phone. It shows the app's name (<code>LinkQRWallet/1.0</code>), your IP address (the number that identifies your internet connection) and the time. If you leave off the start of an address, the app adds <code>https://</code>. If the website sends the request on to another address, the app follows it, and that address sees the request too.</li>
+          <li><strong>What the app keeps.</strong> The title, and nothing else from the page. If the website does not answer within about 8 seconds, or the request fails, the app uses the domain as the title. You can still save the link.</li>
+          <li><strong>Addresses the app refuses.</strong> The app does not save a refused address. It refuses addresses that do not start with <code>http</code> or <code>https</code>; addresses that point to your own device or network (<code>localhost</code>, names ending in <code>.local</code>, and private or reserved numeric IPv4 addresses such as <code>192.168.1.1</code>); names ending in <code>.onion</code>; and names starting with <code>xn--</code> (a coded form of names with special characters). An address from a QR code is checked before it reaches the “Add Link” screen. Every address is checked again when you tap “Save”. An address you type, paste or share in is looked up for its title before that check runs, so the lookup can reach one of these addresses if you enter it.</li>
         </ul>
         <p>What each website does with the request is up to its own privacy policy. We do not see it.</p>
 
         <h2>Permissions</h2>
+        <p>Android asks you to allow some of the things an app wants to use. This app uses two.</p>
         <ul>
-          <li><strong>Camera.</strong> Asked for when you open the scanner, and used only while the scanner is open, to read QR codes. Without it you can still add links by typing, pasting or sharing them in.</li>
+          <li><strong>Camera.</strong> If you have not allowed it yet, Android asks when you open the scanner. The app uses the camera only while the scanner is open, to read QR codes. If you say no, you can still add links by typing, pasting or sharing them in.</li>
           <li><strong>Internet.</strong> Used for the title lookup described above, and for nothing else.</li>
         </ul>
-        <p>The app asks for no other permission: nothing for your contacts, location, microphone, photos or files. Android's support libraries add one more, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, which is private to this app.</p>
+        <p>The app asks for nothing else: not your contacts, location, microphone, photos or files. Android's support libraries also add one internal permission, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, which is private to this app.</p>
 
         <h2>What stays on the phone</h2>
         <ul>
-          <li><strong>Your links.</strong> They live in a database in the app's private storage (<code>linkqrwallet.db</code>) and are not synced to any service of ours. You can edit a link's title and delete a link on its detail screen. Clearing the app's data or uninstalling the app removes them all.</li>
-          <li><strong>QR images you share.</strong> When you tap Share QR, the app saves the image to its private cache folder and hands it, with the link's address, to Android's share sheet, which passes both to the app you pick. The app does not delete these images itself. They stay until Android clears the cache, you clear the app's cache or data, or you uninstall the app.</li>
-          <li><strong>Copy and Open.</strong> Copy puts a link's address on the clipboard. The app never reads the clipboard. Open passes the address to your browser, which then contacts the website under its own policy.</li>
-          <li><strong>Android backup.</strong> The app allows Android's backup and sets no exclusions. If backup is on for your phone, your saved links can be included in your backup with Google and in a phone-to-phone transfer. That is between you and Google, and we have no access to it. You can turn backup off in Android's settings.</li>
+          <li><strong>Your links.</strong> They are stored in a database (<code>linkqrwallet.db</code>) in the app's private storage on your phone. We do not sync them to any service of ours. To rename a link, open it and change the “Title” field. To delete one, open it, tap “Delete” and confirm. To remove everything at once, clear the app's data in Android's settings or uninstall the app.</li>
+          <li><strong>QR images you share.</strong> When you tap “Share QR”, the app saves a QR image of the link in its private cache folder (temporary storage that Android can clear). It passes the image and the link's address to Android's share menu, which hands both to the app you pick. The app does not delete these images itself. They stay until Android clears the cache, you clear the app's cache or data, or you uninstall the app.</li>
+          <li><strong>Copy and Open.</strong> “Copy” puts a link's address on the clipboard (the phone's temporary store for copied text). The app never reads the clipboard. “Open” passes the address to your browser, which then contacts the website itself, under its own policy.</li>
+          <li><strong>Android backup.</strong> If backup is on for your phone, Android can copy app data to your Google account. This app allows that and excludes nothing, so your saved links can be included in your backup with Google and in a phone-to-phone transfer. That is between you and Google, and we have no access to it. You can turn backup off in Android's settings.</li>
         </ul>
 
         <h2>Third parties</h2>
-        <p>The app contains no analytics, advertising or crash-reporting library, and no Google Play services or Firebase. Apart from the title lookup, the app's own code opens no network connection. The libraries it is built from handle QR codes (ZXing), the camera (CameraX), the database (Room), the screens (Jetpack Compose) and the page title (jsoup).</p>
-        <p>The third parties that can see something are the websites you look up (see above), the app you share a QR image with, your browser when you tap Open, and Google if you use Android backup.</p>
+        <p>The app contains no code for analytics, advertising or crash reporting, and no Google Play services or Firebase. Apart from the title lookup, the app's own code makes no network connection. The libraries it is built from (ready-made code from other developers) do these jobs: QR codes (ZXing), the camera (CameraX), the database (Room), the screens (Jetpack Compose) and the page title (jsoup).</p>
+        <p>These can see something: the websites you look up (see above), the app you share a QR image with, your browser when you tap “Open”, and Google if you use Android backup.</p>
         <h3>This website</h3>
-        <p>This website, <code>qr.cocode.dk</code>, is hosted on GitHub Pages. Your browser also loads the page's typeface from Google Fonts (<code>fonts.googleapis.com</code>) and its header and footer from <code>brand.cocode.dk</code>. Each of these servers sees your IP address, as any server would. The site sets no cookies of its own and runs no analytics. This applies to the website only, not to the app.</p>
+        <p>This website, <code>qr.cocode.dk</code>, is hosted on GitHub Pages. Your browser loads the page's font from Google Fonts (<code>fonts.googleapis.com</code>) and its header and footer from <code>brand.cocode.dk</code>. Each of these servers sees your IP address, as any server would. The site sets no cookies of its own and runs no analytics. This applies to the website only, not to the app.</p>
 
         <h2>Your rights</h2>
-        <p>Under the General Data Protection Regulation (GDPR) you have the right to access, correct and delete your data, and to complain. Cocode (Babak Bandpey) is the responsible party. Because the app sends us nothing, we hold no data about you. Your data is on your phone, where you can see, change and delete it as described above. For what a website you looked up holds, contact that website. You can complain to the Danish Data Protection Agency, <a href="https://www.datatilsynet.dk/english">Datatilsynet</a>.</p>
+        <p>Because the app sends us nothing, we hold no data about you. Your data is on your phone, where you can see, change and delete it as described above. Under the General Data Protection Regulation (GDPR, the EU's data protection law) you also have the right to see your data, to have it corrected or deleted, and to complain. Cocode (Babak Bandpey) is responsible for the app. For what a website you looked up holds, contact that website. You can complain to <a href="https://www.datatilsynet.dk/english">Datatilsynet</a>, the Danish Data Protection Agency.</p>
 
         <h2>Contact</h2>
-        <p>Write to <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, or open an issue on <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a>.</p>
+        <p>For questions about this policy or the app, write to <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, or open an issue on <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a> (the project's public page for bug reports and questions).</p>
 
         <h2>Changes</h2>
         <p>If we change this policy, we change the date at the top and say what is new here. Older versions are in the project's history on <a href="https://github.com/cocodedk/LinkQRWallet">GitHub</a>.</p>

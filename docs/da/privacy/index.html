@@ -39,56 +39,58 @@
     <main id="main" tabindex="-1" class="wrap">
       <article class="card prose">
         <h1>Privatlivspolitik - Link QR Wallet</h1>
-        <p class="meta">Gældende fra <time datetime="2026-10-07">7. oktober 2026</time>. Politikken beskriver appen, som den er i version 1.0.10 (<code>com.cocode.linkqrwallet</code>).</p>
+        <p class="meta">Gældende fra <time datetime="2026-10-07">7. oktober 2026</time>. Politikken beskriver version 1.0.10 af appen (<code>com.cocode.linkqrwallet</code>).</p>
 
         <h2>Resumé</h2>
-        <p>Link QR Wallet gemmer de links, du vælger at gemme, på din telefon. Appen har ingen konto, ingen server, som vi driver, ingen statistik og ingen reklamer, og den sender ikke noget til os. Appen bruger internettet til én ting: Når du tilføjer et link, spørger den det websted, linket peger på, om sidens titel. Webstedet kan se forespørgslen.</p>
+        <p>Link QR Wallet gemmer de links, du vælger at gemme, på din telefon. Vi driver ingen server til appen, og den har ingen konti, ingen statistik og ingen reklamer. Appen sender ikke noget til os.</p>
+        <p>Appen bruger internettet til én ting. Når du tilføjer et link, kontakter den det websted, linket peger på, og læser sidens titel, så din liste viser et navn i stedet for en webadresse. Webstedet kan se forespørgslen.</p>
 
         <h2>Hvad der indsamles</h2>
-        <p>Vi indsamler ingenting. Appen har ingen måde at sende noget til os på. Det, appen håndterer på din telefon, er:</p>
+        <p>Vi indsamler ingenting, for appen har ingen måde at sende noget til os på. På din telefon håndterer appen:</p>
         <ul>
-          <li><strong>Links, du gemmer.</strong> For hvert link adressen, en titel, domænet (for eksempel <code>example.com</code>) og tidspunkterne for, hvornår det blev tilføjet og sidst ændret.</li>
-          <li><strong>Adresser, du skriver, indsætter, scanner eller deler ind i appen.</strong> De bliver kun gemt, hvis du trykker på Save.</li>
-          <li><strong>Kamerabilleder, mens scanneren er åben.</strong> Appen aflæser QR-koder i dem og holder dem kun i hukommelsen. De bliver aldrig gemt og aldrig sendt nogen steder hen.</li>
+          <li><strong>Links, du gemmer.</strong> For hvert link: adressen, en titel, domænet (webstedets navn, for eksempel <code>example.com</code>) og tidspunkterne for, hvornår du tilføjede og sidst ændrede det.</li>
+          <li><strong>Adresser, du skriver, indsætter, scanner eller deler ind i appen.</strong> Appen beholder en adresse, kun hvis du trykker på »Save«.</li>
+          <li><strong>Kamerabilleder, mens scanneren er åben.</strong> Appen aflæser QR-koder (firkantede mønstre, der kan indeholde en webadresse) i dem. Billederne ligger kun i hukommelsen. Appen gemmer eller sender dem aldrig.</li>
         </ul>
         <p>Appen har ingen konto og beder aldrig om dit navn, din e-mailadresse eller dit telefonnummer.</p>
 
         <h2>Servere appen kontakter</h2>
-        <p>Kun én slags: webstedet bag et link, du er ved at tilføje. Appen henter siden og læser dens titel. Der ligger ingen server fra os imellem, og appen kontakter ingen andre servere.</p>
+        <p>Kun én slags: webstedet bag et link, du tilføjer. Appen beder webstedet om siden og læser dens titel, som er det navn, din browser viser på sidens fane. Appen gør det, så din liste viser navne, du kan genkende. Ingen server fra os er med i det, og appen kontakter ingen andre servere.</p>
         <ul>
-          <li><strong>Hvornår.</strong> Så snart tilføjelsesskærmen har en adresse: når du har skrevet eller indsat en og holder en pause på omkring et halvt sekund, når du scanner en, når en anden app deler en ind i Link QR Wallet, eller når du trykker på Fetch Title. Det sker, før du trykker på Save, så webstedet bliver kontaktet, selv om du bagefter fortryder.</li>
-          <li><strong>Hvad webstedet ser.</strong> En almindelig webforespørgsel fra din telefon, hvor appen kalder sig <code>LinkQRWallet/1.0</code>, og som ved enhver webforespørgsel din IP-adresse og tidspunktet. Hvis du udelader begyndelsen af en adresse, sætter appen <code>https://</code> foran. Hvis webstedet sender appen videre til en anden adresse, følger appen med, og den adresse ser også forespørgslen.</li>
-          <li><strong>Hvad appen beholder.</strong> Titlen og intet andet fra siden. Svarer webstedet ikke inden for cirka 8 sekunder, eller mislykkes forespørgslen, bruger appen domænet som titel, og du kan stadig gemme linket.</li>
-          <li><strong>Hvad appen afviser.</strong> En adresse, du scanner, bliver tjekket, før den når tilføjelsesskærmen, og en adresse bliver tjekket igen, når du trykker på Save. Tjekket afviser alt, der ikke er <code>http</code> eller <code>https</code>, <code>localhost</code>, navne der ender på <code>.local</code> eller <code>.onion</code>, navne der begynder med <code>xn--</code>, og private eller reserverede IPv4-adresser. En adresse, du skriver, indsætter eller deler ind, bliver slået op for at finde en titel, før tjekket kører. Opslaget kan altså nå sådan en adresse, hvis du taster den ind.</li>
+          <li><strong>Hvornår det sker.</strong> Så snart skærmen »Add Link« har en adresse. Det sker, når du skriver eller indsætter en og holder en pause på omkring et halvt sekund, scanner en QR-kode, deler et link ind i appen fra en anden app eller trykker på »Fetch Title«. Det sker, før du trykker på »Save«, så webstedet bliver kontaktet, selv om du bagefter fortryder.</li>
+          <li><strong>Hvad webstedet ser.</strong> En almindelig webforespørgsel fra din telefon. Den viser appens navn (<code>LinkQRWallet/1.0</code>), din IP-adresse (det nummer, der identificerer din internetforbindelse) og tidspunktet. Udelader du begyndelsen af en adresse, sætter appen <code>https://</code> foran. Sender webstedet forespørgslen videre til en anden adresse, følger appen med, og den adresse ser også forespørgslen.</li>
+          <li><strong>Hvad appen beholder.</strong> Titlen og intet andet fra siden. Svarer webstedet ikke inden for cirka 8 sekunder, eller mislykkes forespørgslen, bruger appen domænet som titel. Du kan stadig gemme linket.</li>
+          <li><strong>Adresser, appen afviser.</strong> Appen gemmer ikke en afvist adresse. Den afviser adresser, der ikke begynder med <code>http</code> eller <code>https</code>; adresser, der peger på din egen enhed eller dit eget netværk (<code>localhost</code>, navne der ender på <code>.local</code>, og private eller reserverede numeriske IPv4-adresser som <code>192.168.1.1</code>); navne der ender på <code>.onion</code>; og navne der begynder med <code>xn--</code> (en kodet form for navne med specialtegn). En adresse fra en QR-kode bliver tjekket, før den når skærmen »Add Link«. Alle adresser bliver tjekket igen, når du trykker på »Save«. En adresse, du skriver, indsætter eller deler ind, bliver slået op for at finde en titel, før det tjek kører. Opslaget kan altså nå en af disse adresser, hvis du taster den ind.</li>
         </ul>
         <p>Hvad hvert websted gør med forespørgslen, afgør dets egen privatlivspolitik. Det ser vi ikke.</p>
 
         <h2>Tilladelser</h2>
+        <p>Android beder dig om lov til noget af det, en app vil bruge. Denne app bruger to ting.</p>
         <ul>
-          <li><strong>Kamera.</strong> Appen spørger, når du åbner scanneren, og bruger kameraet kun, mens scanneren er åben, til at aflæse QR-koder. Uden tilladelsen kan du stadig tilføje links ved at skrive, indsætte eller dele dem ind.</li>
+          <li><strong>Kamera.</strong> Har du ikke sagt ja endnu, spørger Android, når du åbner scanneren. Appen bruger kun kameraet, mens scanneren er åben, til at aflæse QR-koder. Siger du nej, kan du stadig tilføje links ved at skrive, indsætte eller dele dem ind.</li>
           <li><strong>Internet.</strong> Bruges til titelopslaget ovenfor og til intet andet.</li>
         </ul>
-        <p>Appen beder ikke om andre tilladelser: ingenting til dine kontakter, din placering, din mikrofon, dine billeder eller dine filer. Androids understøttelsesbiblioteker tilføjer én til, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, som kun gælder for denne app.</p>
+        <p>Appen beder ikke om andet: ikke om dine kontakter, din placering, din mikrofon, dine billeder eller dine filer. Androids understøttelsesbiblioteker tilføjer også én intern tilladelse, <code>DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION</code>, som kun gælder for denne app.</p>
 
         <h2>Hvad der bliver på telefonen</h2>
         <ul>
-          <li><strong>Dine links.</strong> De ligger i en database i appens private lager (<code>linkqrwallet.db</code>) og bliver ikke overført til nogen tjeneste hos os. Du kan rette et links titel og slette et link på dets detaljeskærm. Rydder du appens data eller afinstallerer appen, forsvinder alle links.</li>
-          <li><strong>QR-billeder, du deler.</strong> Når du trykker på Share QR, gemmer appen billedet i sin private cachemappe og giver det sammen med linkets adresse til Androids delingsmenu, som sender begge dele videre til den app, du vælger. Appen sletter ikke selv billederne. De bliver liggende, til Android rydder cachen, du rydder appens cache eller data, eller du afinstallerer appen.</li>
-          <li><strong>Copy og Open.</strong> Copy lægger et links adresse på udklipsholderen. Appen læser aldrig udklipsholderen. Open giver adressen til din browser, som så kontakter webstedet efter sin egen politik.</li>
-          <li><strong>Androids sikkerhedskopi.</strong> Appen tillader Androids sikkerhedskopiering og har ingen undtagelser. Er sikkerhedskopiering slået til på din telefon, kan dine gemte links komme med i din sikkerhedskopi hos Google og i en overførsel fra telefon til telefon. Det er mellem dig og Google, og vi har ikke adgang til den. Du kan slå sikkerhedskopiering fra i Androids indstillinger.</li>
+          <li><strong>Dine links.</strong> De ligger i en database (<code>linkqrwallet.db</code>) i appens private lager på din telefon. Vi overfører dem ikke til nogen tjeneste hos os. Vil du omdøbe et link, så åbn det og ret feltet »Title«. Vil du slette et, så åbn det, tryk på »Delete« og bekræft. Vil du fjerne alt på én gang, så ryd appens data i Androids indstillinger, eller afinstaller appen.</li>
+          <li><strong>QR-billeder, du deler.</strong> Når du trykker på »Share QR«, gemmer appen et QR-billede af linket i sin private cachemappe (midlertidigt lager, som Android kan rydde). Billedet og linkets adresse går til Androids delingsmenu, som giver begge dele videre til den app, du vælger. Appen sletter ikke selv billederne. De bliver liggende, til Android rydder cachen, du rydder appens cache eller data, eller du afinstallerer appen.</li>
+          <li><strong>Copy og Open.</strong> »Copy« lægger et links adresse på udklipsholderen (telefonens midlertidige lager til kopieret tekst). Appen læser aldrig udklipsholderen. »Open« giver adressen til din browser, som selv kontakter webstedet efter sin egen politik.</li>
+          <li><strong>Androids sikkerhedskopi.</strong> Er sikkerhedskopiering slået til på din telefon, kan Android kopiere appdata til din Google-konto. Appen tillader det og undtager ingenting, så dine gemte links kan komme med i din sikkerhedskopi hos Google og i en overførsel fra telefon til telefon. Det er mellem dig og Google, og vi har ikke adgang til den. Du kan slå sikkerhedskopiering fra i Androids indstillinger.</li>
         </ul>
 
         <h2>Tredjeparter</h2>
-        <p>Appen indeholder intet bibliotek til statistik, reklamer eller fejlrapportering, og hverken Google Play-tjenester eller Firebase. Ud over titelopslaget åbner appens egen kode ingen netværksforbindelser. De biblioteker, appen er bygget af, tager sig af QR-koder (ZXing), kameraet (CameraX), databasen (Room), skærmene (Jetpack Compose) og sidens titel (jsoup).</p>
-        <p>De tredjeparter, der kan se noget, er de websteder, du slår op (se ovenfor), den app, du deler et QR-billede med, din browser, når du trykker på Open, og Google, hvis du bruger Androids sikkerhedskopi.</p>
+        <p>Appen indeholder ingen kode til statistik, reklamer eller fejlrapportering, og hverken Google Play-tjenester eller Firebase. Ud over titelopslaget laver appens egen kode ingen netværksforbindelser. De biblioteker (færdig kode fra andre udviklere), appen er bygget af, løser disse opgaver: QR-koder (ZXing), kameraet (CameraX), databasen (Room), skærmene (Jetpack Compose) og sidens titel (jsoup).</p>
+        <p>Disse kan se noget: de websteder, du slår op (se ovenfor), den app, du deler et QR-billede med, din browser, når du trykker på »Open«, og Google, hvis du bruger Androids sikkerhedskopi.</p>
         <h3>Dette websted</h3>
-        <p>Dette websted, <code>qr.cocode.dk</code>, ligger på GitHub Pages. Din browser henter også sidens skrifttype fra Google Fonts (<code>fonts.googleapis.com</code>) og sidens top og bund fra <code>brand.cocode.dk</code>. Hver af disse servere ser din IP-adresse, som enhver server gør. Webstedet sætter ingen egne cookies og kører ingen statistik. Det gælder kun webstedet, ikke appen.</p>
+        <p>Dette websted, <code>qr.cocode.dk</code>, ligger på GitHub Pages. Din browser henter sidens skrifttype fra Google Fonts (<code>fonts.googleapis.com</code>) og sidehoved og sidefod fra <code>brand.cocode.dk</code>. Hver af disse servere ser din IP-adresse, som enhver server gør. Webstedet sætter ingen egne cookies og kører ingen statistik. Det gælder kun webstedet, ikke appen.</p>
 
         <h2>Dine rettigheder</h2>
-        <p>Efter databeskyttelsesforordningen (GDPR) har du ret til indsigt i dine data, til at få dem rettet og slettet og til at klage. Cocode (Babak Bandpey) er dataansvarlig. Fordi appen ikke sender os noget, har vi ingen data om dig. Dine data ligger på din telefon, hvor du kan se, ændre og slette dem, som beskrevet ovenfor. Hvad et websted, du har slået op, ligger inde med, må du spørge webstedet om. Du kan klage til <a href="https://www.datatilsynet.dk/">Datatilsynet</a>.</p>
+        <p>Fordi appen ikke sender os noget, har vi ingen data om dig. Dine data ligger på din telefon, hvor du kan se, ændre og slette dem, som beskrevet ovenfor. Efter databeskyttelsesforordningen (GDPR, EU's lov om beskyttelse af personoplysninger) har du desuden ret til indsigt i dine data, til at få dem rettet og slettet og til at klage. Cocode (Babak Bandpey) er dataansvarlig for appen. Hvad et websted, du har slået op, ligger inde med, må du spørge webstedet om. Du kan klage til <a href="https://www.datatilsynet.dk/">Datatilsynet</a>.</p>
 
         <h2>Kontakt</h2>
-        <p>Skriv til <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, eller opret en sag på <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a>.</p>
+        <p>Har du spørgsmål om politikken eller appen, så skriv til <a href="mailto:bb@cocode.dk">bb@cocode.dk</a>, eller opret en sag på <a href="https://github.com/cocodedk/LinkQRWallet/issues">GitHub</a> (projektets offentlige side til fejlmeldinger og spørgsmål).</p>
 
         <h2>Ændringer</h2>
         <p>Ændrer vi politikken, ændrer vi datoen øverst og skriver her, hvad der er nyt. Ældre udgaver ligger i projektets historik på <a href="https://github.com/cocodedk/LinkQRWallet">GitHub</a>.</p>
