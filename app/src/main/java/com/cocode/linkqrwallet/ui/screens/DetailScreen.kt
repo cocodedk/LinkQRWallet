@@ -5,7 +5,8 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,10 +33,12 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cocode.linkqrwallet.R
 import com.cocode.linkqrwallet.data.LinkItem
 import com.cocode.linkqrwallet.ui.components.generateQrBitmap
 import com.cocode.linkqrwallet.ui.components.rememberQrBitmap
@@ -61,10 +64,10 @@ fun DetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Link Detail") },
+                title = { Text(stringResource(R.string.detail_title)) },
                 navigationIcon = {
                     TextButton(onClick = onBack) {
-                        Text("Back")
+                        Text(stringResource(R.string.action_back))
                     }
                 }
             )
@@ -77,7 +80,7 @@ fun DetailScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (link == null) {
-                Text("Loading...")
+                Text(stringResource(R.string.detail_loading))
             } else {
                 DetailContent(
                     item = link,
@@ -96,8 +99,8 @@ fun DetailScreen(
     if (showDeleteDialog && link != null) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Delete link?") },
-            text = { Text("This will remove the link from your wallet.") },
+            title = { Text(stringResource(R.string.detail_delete_title)) },
+            text = { Text(stringResource(R.string.detail_delete_body)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -105,18 +108,19 @@ fun DetailScreen(
                         viewModel.delete(link!!) { onBack() }
                     }
                 ) {
-                    Text("Delete")
+                    Text(stringResource(R.string.action_delete))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.action_cancel))
                 }
             }
         )
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DetailContent(
     item: LinkItem?,
@@ -131,26 +135,29 @@ private fun DetailContent(
 
     Image(
         bitmap = qrBitmap,
-        contentDescription = "QR code",
+        contentDescription = stringResource(R.string.qr_code_description),
         modifier = Modifier.size(240.dp)
     )
     OutlinedTextField(
         value = item.title,
         onValueChange = onUpdateTitle,
-        label = { Text("Title") },
+        label = { Text(stringResource(R.string.field_title)) },
         modifier = Modifier.fillMaxWidth()
     )
     Text(text = item.url, style = MaterialTheme.typography.bodyMedium)
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Button(onClick = onOpen) { Text("Open") }
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Button(onClick = onOpen) { Text(stringResource(R.string.detail_open)) }
         Button(onClick = {
             clipboardManager.setText(AnnotatedString(item.url))
-        }) { Text("Copy") }
-        Button(onClick = onShare) { Text("Share QR") }
+        }) { Text(stringResource(R.string.detail_copy)) }
+        Button(onClick = onShare) { Text(stringResource(R.string.detail_share)) }
     }
     Spacer(modifier = Modifier.height(8.dp))
     TextButton(onClick = onDelete) {
-        Text("Delete", color = MaterialTheme.colorScheme.error)
+        Text(stringResource(R.string.detail_delete), color = MaterialTheme.colorScheme.error)
     }
 }
 
@@ -172,5 +179,5 @@ private fun shareQr(context: Context, item: LinkItem) {
         putExtra(Intent.EXTRA_TEXT, item.url)
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
-    context.startActivity(Intent.createChooser(intent, "Share QR"))
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.detail_share)))
 }

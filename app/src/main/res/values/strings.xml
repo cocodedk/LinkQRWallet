@@ -1,3 +1,95 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Link QR Wallet</string>
+
+    <!-- Shared labels -->
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_add_link">Add link</string>
+    <string name="action_scan_qr">Scan QR code</string>
+    <string name="field_title">Title</string>
+    <string name="qr_code_description">QR code</string>
+
+    <!-- Library -->
+    <string name="library_sort_description">Sort links</string>
+    <string name="library_add_description">Add a link or scan a QR code</string>
+    <string name="library_search">Search</string>
+    <string name="library_empty_title">No links to show</string>
+    <string name="library_empty_body">To add a link, tap the + button. If you searched, change or clear your search.</string>
+    <string name="library_sorted_by">Sorted by: %1$s</string>
+
+    <!-- Sort options -->
+    <string name="sort_newest">Newest first</string>
+    <string name="sort_oldest">Oldest first</string>
+    <string name="sort_title_asc">Title A-Z</string>
+    <string name="sort_title_desc">Title Z-A</string>
+    <string name="sort_website_asc">Website A-Z</string>
+
+    <!-- Add link -->
+    <string name="add_url_label">Web address (URL)</string>
+    <string name="add_qr_preview_description">QR code preview</string>
+    <string name="add_website_placeholder">The website name will appear here</string>
+    <string name="add_title_hint">If you leave this empty, the app looks up the page\'s title in the background after you save.</string>
+    <string name="add_duplicate_title">Already saved</string>
+    <string name="add_duplicate_body">This link is already in your wallet. Do you want to save a second copy?</string>
+    <string name="add_duplicate_confirm">Save a second copy</string>
+
+    <!-- Link details -->
+    <string name="detail_title">Link details</string>
+    <string name="detail_loading">Loading…</string>
+    <string name="detail_open">Open link</string>
+    <string name="detail_copy">Copy link</string>
+    <string name="detail_share">Share QR code</string>
+    <string name="detail_delete">Delete link</string>
+    <string name="detail_delete_title">Delete link?</string>
+    <string name="detail_delete_body">This permanently removes the link from your wallet. You cannot undo this.</string>
+
+    <!-- Scan -->
+    <string name="scan_permission_needed">To scan QR codes, the app needs to use your camera. The camera picture is read on your phone and is never saved or sent anywhere.</string>
+    <string name="scan_grant_permission">Allow camera access</string>
+    <string name="scan_hint">Point your camera at a QR code with a web link. The app then shows the link so you can check it before saving.</string>
+
+    <!-- Messages when a link is refused -->
+    <string name="error_enter_url">Enter a web address, such as example.com.</string>
+    <string name="error_qr_no_url">This QR code does not contain a web address.</string>
+    <string name="error_url_blocked">This link cannot be saved.</string>
+    <string name="block_invalid">This is not a valid web address.</string>
+    <string name="block_no_scheme">The web address must start with http:// or https://.</string>
+    <string name="block_not_http">This type of link cannot be saved. Enter a web address that starts with http:// or https://.</string>
+    <string name="block_no_host">The web address needs a website name, such as example.com.</string>
+    <string name="block_local">This link points to your own phone or a local network, so it cannot be saved.</string>
+    <string name="block_onion">Links ending in .onion cannot be saved.</string>
+    <string name="block_private">This link goes to a local, private or reserved IP address (a number such as 192.168.1.1), so it cannot be saved.</string>
+    <string name="block_encoded_name" tools:ignore="TypographyDashes">The app cannot save links to websites whose name starts with xn--. This is how names with letters such as æ, ö or ü are written in a web address.</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_version">Version %1$s (%2$d)</string>
+    <string name="about_check_updates">See the latest version</string>
+    <string name="about_update_note">The app does not look for updates by itself. This button opens the page where new versions are listed, so you can see if yours is the latest.</string>
+    <string name="about_what_title">What the app does</string>
+    <string name="about_what_body">Link QR Wallet saves your web links on your phone and shows each one as a QR code. A QR code is a square picture that a phone camera can read to open a link. You can search and sort your saved links, scan a QR code to save the link inside it, and share a QR code as a picture.</string>
+    <string name="about_privacy_title">Privacy</string>
+    <string name="about_privacy_local">Your saved links stay on your phone. The app has no account, no ads, no analytics and no tracking, and it never sends your links to Cocode.</string>
+    <string name="about_privacy_camera">The camera is used only while the Scan QR code screen is open. The camera picture is read on your phone and is never saved or sent. The app keeps the text of a QR code only if you choose to save it as a link.</string>
+    <string name="about_privacy_internet">The app uses the internet for one thing: reading the page title of a link you save. If you leave the title empty, the app looks up the page\'s title in the background after you save. Nothing is sent to any website before you save. If you type a title yourself, the app does not ask the website for one. The request goes straight from your phone to that website, and the website can see your phone\'s IP address, the number that identifies your connection on the internet. Before the app connects, it checks where the website\'s name leads, and it checks every page it is sent on to. It connects only to addresses it has checked, and it stops if any of them points to your own phone or network.</string>
+    <string name="about_privacy_backup">If you have turned on Android backup, Android may include this app\'s data in your own backup. Cocode has no access to it.</string>
+    <string name="about_privacy_link">Read the privacy policy</string>
+    <string name="about_links_title">Links</string>
+    <string name="about_website">Open the website</string>
+    <string name="about_source">See the source code on GitHub</string>
+    <string name="about_report">Report a problem on GitHub</string>
+    <string name="about_no_browser">No app on your phone can open this link. Install a web browser, then try again.</string>
+    <string name="about_credits">Credits and licenses</string>
+    <string name="about_license">Link QR Wallet is free software. It is released under the MIT license, which lets you use, copy, change and share it.</string>
+    <string name="about_credits_intro">The app is built with these libraries made by others. Each one is followed by its license.</string>
+    <string name="credit_zxing">ZXing: creates and reads QR codes (Apache-2.0).</string>
+    <string name="credit_jsoup">jsoup: reads the page title of a website (MIT).</string>
+    <string name="credit_okhttp">OkHttp and Okio: connect to a website to read its page title (Apache-2.0).</string>
+    <string name="credit_androidx">AndroidX and Jetpack Compose: the screens, the saved links (Room) and the camera (CameraX) (Apache-2.0).</string>
+    <string name="credit_kotlin">Kotlin and kotlinx.coroutines: the language the app is written in, and its support for background tasks (Apache-2.0).</string>
+    <string name="about_made_by">Made by Cocode (cocode.dk)</string>
+    <string name="about_made_by_name" translatable="false">Babak Bandpey</string>
+    <string name="about_made_by_email" translatable="false">bb@cocode.dk</string>
 </resources>

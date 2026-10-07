@@ -29,10 +29,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
+import com.cocode.linkqrwallet.R
 import com.cocode.linkqrwallet.data.UrlSafety
 import com.cocode.linkqrwallet.data.UrlUtils
+import com.cocode.linkqrwallet.ui.messageRes
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -49,7 +52,7 @@ fun ScanQrScreen(
     val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
     val hasResult = remember { AtomicBoolean(false) }
     var previewView: PreviewView? by remember { mutableStateOf(null) }
-    var errorMessage: String? by remember { mutableStateOf(null) }
+    var errorMessage: Int? by remember { mutableStateOf(null) }
     var hasPermission by remember {
         mutableStateOf(
             ContextCompat.checkSelfPermission(
@@ -103,7 +106,7 @@ fun ScanQrScreen(
                 val normalized = UrlUtils.normalizeUrl(value)
                 if (normalized == null) {
                     mainHandler.post {
-                        errorMessage = "QR does not contain a valid URL."
+                        errorMessage = R.string.error_qr_no_url
                     }
                     mainHandler.postDelayed({
                         hasResult.set(false)
@@ -114,7 +117,7 @@ fun ScanQrScreen(
                 val safety = UrlSafety.check(normalized)
                 if (!safety.isSafe) {
                     mainHandler.post {
-                        errorMessage = safety.reason ?: "Unsafe URL blocked."
+                        errorMessage = safety.reason.messageRes()
                     }
                     mainHandler.postDelayed({
                         hasResult.set(false)
@@ -143,9 +146,9 @@ fun ScanQrScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Scan QR") },
+                title = { Text(stringResource(R.string.action_scan_qr)) },
                 navigationIcon = {
-                    TextButton(onClick = onClose) { Text("Back") }
+                    TextButton(onClick = onClose) { Text(stringResource(R.string.action_back)) }
                 }
             )
         }

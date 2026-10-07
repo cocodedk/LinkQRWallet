@@ -4,15 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -26,9 +23,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cocode.linkqrwallet.R
 import com.cocode.linkqrwallet.ui.components.rememberQrBitmap
 import com.cocode.linkqrwallet.ui.viewmodel.AddLinkViewModel
 import com.cocode.linkqrwallet.ui.viewmodel.AppViewModelFactory
@@ -53,10 +52,10 @@ fun AddLinkScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add Link") },
+                title = { Text(stringResource(R.string.action_add_link)) },
                 navigationIcon = {
                     TextButton(onClick = onCancel) {
-                        Text("Back")
+                        Text(stringResource(R.string.action_back))
                     }
                 }
             )
@@ -71,13 +70,13 @@ fun AddLinkScreen(
             OutlinedTextField(
                 value = state.rawUrl,
                 onValueChange = viewModel::updateUrl,
-                label = { Text("URL") },
+                label = { Text(stringResource(R.string.add_url_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
-            if (state.errorMessage != null) {
+            state.errorMessage?.let { message ->
                 Text(
-                    text = state.errorMessage ?: "",
+                    text = stringResource(message),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
                 )
@@ -85,7 +84,8 @@ fun AddLinkScreen(
             OutlinedTextField(
                 value = state.title,
                 onValueChange = viewModel::updateTitle,
-                label = { Text("Title") },
+                label = { Text(stringResource(R.string.field_title)) },
+                supportingText = { Text(stringResource(R.string.add_title_hint)) },
                 modifier = Modifier.fillMaxWidth()
             )
             Row(
@@ -96,33 +96,17 @@ fun AddLinkScreen(
                     val qrBitmap = rememberQrBitmap(state.normalizedUrl ?: "", 220)
                     Image(
                         bitmap = qrBitmap,
-                        contentDescription = "QR preview",
+                        contentDescription = stringResource(R.string.add_qr_preview_description),
                         modifier = Modifier.size(140.dp)
                     )
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = state.domain.ifBlank { "Domain will appear here" },
+                        text = state.domain.ifBlank { stringResource(R.string.add_website_placeholder) },
                         style = MaterialTheme.typography.bodyMedium,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = {
-                            state.normalizedUrl?.let { viewModel.fetchTitle(it) }
-                        },
-                        enabled = state.normalizedUrl != null
-                    ) {
-                        if (state.isFetchingTitle) {
-                            CircularProgressIndicator(
-                                strokeWidth = 2.dp,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Spacer(modifier = Modifier.size(8.dp))
-                        }
-                        Text("Fetch Title")
-                    }
                 }
             }
             Button(
@@ -138,7 +122,7 @@ fun AddLinkScreen(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text("Save")
+                Text(stringResource(R.string.action_save))
             }
         }
     }
@@ -146,8 +130,8 @@ fun AddLinkScreen(
     if (state.duplicateId != null) {
         AlertDialog(
             onDismissRequest = { viewModel.clearDuplicatePrompt() },
-            title = { Text("Already saved") },
-            text = { Text("This URL is already in your wallet. Add another copy?") },
+            title = { Text(stringResource(R.string.add_duplicate_title)) },
+            text = { Text(stringResource(R.string.add_duplicate_body)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -155,12 +139,12 @@ fun AddLinkScreen(
                         viewModel.saveDuplicateAllowed(onDone)
                     }
                 ) {
-                    Text("Add duplicate")
+                    Text(stringResource(R.string.add_duplicate_confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { viewModel.clearDuplicatePrompt() }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.action_cancel))
                 }
             }
         )

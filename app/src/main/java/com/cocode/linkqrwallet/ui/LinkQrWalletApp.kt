@@ -26,8 +26,8 @@ import com.cocode.linkqrwallet.ui.viewmodel.AppViewModelFactory
 fun LinkQrWalletRoot(sharedUrl: String?) {
     val navController = rememberNavController()
     val context = LocalContext.current
-    val repository = (context.applicationContext as LinkQrWalletApp).repository
-    val viewModelFactory = remember(repository) { AppViewModelFactory(repository) }
+    val app = context.applicationContext as LinkQrWalletApp
+    val viewModelFactory = remember(app) { AppViewModelFactory(app.repository, app.appScope) }
     var handledShare by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(sharedUrl) {
