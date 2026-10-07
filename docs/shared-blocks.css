@@ -1,0 +1,95 @@
+/* The shared cocode-apps header, install block and footer, in this site's look. Both wrappers
+   sit in the same column as .wrap (960px content plus 24px each side, no box-sizing reset). */
+.site-nav,
+.site-foot {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.site-nav {
+  padding-top: 12px;
+}
+.cocode-nav a,
+.cocode-footer a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.cocode-nav a:hover,
+.cocode-footer a:hover {
+  text-decoration: underline;
+}
+.cocode-nav .brand {
+  font-family: "Fraunces", "Georgia", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.cocode-nav [aria-current="page"]:not(.brand) {
+  text-decoration: underline;
+  text-decoration-color: var(--focus);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+main.wrap {
+  padding-top: 24px;
+}
+main:focus {
+  outline: none;
+}
+.install {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+.install a,
+.install .fdroid-soon {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 6px 18px;
+  border-radius: 999px;
+  line-height: 1.3;
+  font-weight: 600;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.install .fdroid-soon {
+  border: 2px dashed rgba(27, 27, 27, 0.3);
+  color: #4f4a55;
+}
+.install li:nth-child(2) a {
+  background: #1c1a1f;
+  color: #fff;
+}
+.install li:nth-child(2) a:hover {
+  background: #3a373f;
+}
+.install li:nth-child(3) a {
+  border: 1px solid rgba(27, 27, 27, 0.18);
+  background: #fff2e4;
+  color: var(--text);
+}
+.install li:nth-child(3) a:hover {
+  background: #ffe4c9;
+  border-color: rgba(27, 27, 27, 0.35);
+}
+.releases a {
+  color: var(--text);
+}
+.install a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--focus);
+}
+.site-foot {
+  padding-bottom: 40px;
+}
+.site-foot .cocode-footer {
+  border-top: 1px solid rgba(28, 26, 31, 0.15);
+  padding-top: 16px;
+  font-size: 0.95rem;
+}

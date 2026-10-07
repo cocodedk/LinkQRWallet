@@ -5,149 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Link QR Wallet</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;600&display=swap");
-      :root {
-        color-scheme: light;
-        --bg: #f5e7d6;
-        --text: #1c1a1f;
-        --accent: #ff7a1a;
-        --card: #fff7ee;
-        --shadow: rgba(28, 26, 31, 0.15);
-      }
-      body {
-        margin: 0;
-        font-family: "Space Grotesk", "Helvetica", sans-serif;
-        background:
-          radial-gradient(circle at top, #fff4e6 0%, var(--bg) 45%, #f3d3b8 100%),
-          linear-gradient(120deg, #f7e2cb 0%, #fcebd8 60%, #f5d0ae 100%);
-        color: var(--text);
-      }
-      .wrap {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 64px 24px 80px;
-      }
-      .hero {
-        display: grid;
-        gap: 32px;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        align-items: center;
-      }
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        font-size: 0.75rem;
-      }
-      .badge span {
-        background: var(--accent);
-        color: white;
-        padding: 2px 8px;
-        border-radius: 999px;
-      }
-      h1 {
-        font-family: "Fraunces", "Georgia", serif;
-        font-size: clamp(2.4rem, 3.2vw, 3.4rem);
-        margin: 16px 0 8px;
-      }
-      p {
-        line-height: 1.6;
-        font-size: 1.05rem;
-      }
-      .card {
-        background: var(--card);
-        padding: 24px;
-        border-radius: 24px;
-        box-shadow: 0 18px 40px var(--shadow);
-      }
-      .grid {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        margin-top: 32px;
-      }
-      .pill {
-        border: 1px solid rgba(27, 27, 27, 0.12);
-        border-radius: 999px;
-        padding: 10px 16px;
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        font-size: 0.95rem;
-        background: white;
-      }
-      .cta-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 8px;
-      }
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 16px;
-        border-radius: 999px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-      .cta-primary {
-        background: #1c1a1f;
-        color: #fff;
-      }
-      .cta-secondary {
-        border: 1px solid rgba(27, 27, 27, 0.18);
-        color: var(--text);
-        background: #fff2e4;
-      }
-      .cta:hover {
-        cursor: pointer;
-      }
-      .cta-primary:hover {
-        background: #3a373f;
-      }
-      .cta-primary:focus,
-      .cta-primary:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px #1c1a1f;
-      }
-      .cta-secondary:hover {
-        background: #ffe4c9;
-        border-color: rgba(27, 27, 27, 0.35);
-      }
-      .cta-secondary:focus,
-      .cta-secondary:focus-visible {
-        outline: none;
-        box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent);
-      }
-      .qr-box {
-        aspect-ratio: 1 / 1;
-        display: grid;
-        place-items: center;
-        border-radius: 24px;
-        border: 3px solid rgba(28, 26, 31, 0.14);
-        background: radial-gradient(circle at 30% 30%, #fff7ef, #f3d7bd);
-        padding: 18px;
-      }
-      .icon {
-        width: min(240px, 60vw);
-        animation: float 3.6s ease-in-out infinite;
-      }
-      @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-        100% { transform: translateY(0px); }
-      }
-      /* The cocode.dk frame lines up with the .wrap column. .wrap has no box-sizing reset, so its
-         max-width (960px) caps the content box only and its 24px padding adds to that -- the
-         frame's own bar is border-box, so --cocode-max needs the full rendered width (960 + 2*24). */
-      cocode-head, cocode-foot { --cocode-max: 1008px; --cocode-gutter: 24px; }
-    </style>
+    <link rel="alternate" hreflang="en" href="https://qr.cocode.dk/" />
+    <link rel="alternate" hreflang="x-default" href="https://qr.cocode.dk/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Link QR Wallet" />
+    <meta property="og:url" content="https://qr.cocode.dk/" />
+    <meta property="og:image" content="https://qr.cocode.dk/img/share.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="500" />
+    <meta property="og:image:alt" content="Link QR Wallet: the app icon and name" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="shared-blocks.css" />
     <link rel="stylesheet" href="https://brand.cocode.dk/v1.css" />
     <script type="module" src="https://brand.cocode.dk/v1.js"></script>
   </head>
@@ -157,7 +26,19 @@
     <cocode-head project="Link QR Wallet" accent="#ff7a1a" on-accent="#ffffff">
       <a href="https://cocode.dk">cocode.dk</a>
     </cocode-head>
-    <main class="wrap">
+    <header class="site-nav">
+      <!-- cocode-apps:nav:start -->
+<link rel="stylesheet" href="/css/cocode-nav.css">
+<a class="skip" href="#main">Skip to content</a>
+<nav class="cocode-nav" aria-label="Link QR Wallet">
+  <a class="brand" href="/" data-nav="home" aria-current="page"><img src="/img/icon.png" alt="" width="32" height="32">Link QR Wallet</a>
+  <a href="/#how" data-nav="how">How it works</a>
+  <a href="/#install" data-nav="install">Install</a>
+  <a href="https://cocode.dk/" data-nav="more">More apps</a>
+</nav>
+<!-- cocode-apps:nav:end -->
+    </header>
+    <main id="main" tabindex="-1" class="wrap">
       <section class="hero">
         <div>
           <div class="badge">
@@ -171,11 +52,9 @@
             sortable, and offline-ready.
           </p>
           <div class="cta-group">
-            <a class="cta cta-primary" href="https://github.com/cocodedk/LinkQRWallet">
+            <a class="cta cta-primary" href="#install">Get the app</a>
+            <a class="cta cta-secondary" href="https://github.com/cocodedk/LinkQRWallet">
               View on GitHub
-            </a>
-            <a class="cta cta-secondary" href="https://github.com/cocodedk/LinkQRWallet/releases/latest">
-              Latest release
             </a>
           </div>
           <div class="grid">
@@ -209,12 +88,26 @@
           </div>
         </div>
       </section>
-      <section class="card" style="margin-top: 32px;">
+      <section id="how" class="card" style="margin-top: 32px;">
         <h2 style="margin-top: 0;">What it does</h2>
         <p>
           Save a URL, preview its QR instantly, and open it later with a tap.
           Search by title or domain, sort your library, and share QR codes
           straight from the app.
+        </p>
+      </section>
+      <section id="install" class="card" style="margin-top: 24px;">
+        <h2 style="margin-top: 0;">Install on Android</h2>
+        <!-- cocode-apps:install:start -->
+<ul class="install" role="list">
+  <li><p class="fdroid-soon">Coming to F-Droid</p></li>
+  <li><a href="https://github.com/cocodedk/LinkQRWallet/releases/latest/download/LinkQRWallet.apk">Download the APK from GitHub</a></li>
+  <li><a href="https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/cocodedk/LinkQRWallet">Auto-update the GitHub APK with Obtainium</a></li>
+</ul>
+<!-- cocode-apps:install:end -->
+        <p class="releases">
+          Every version is on the
+          <a href="https://github.com/cocodedk/LinkQRWallet/releases/latest">GitHub releases page</a>.
         </p>
       </section>
       <section class="card" style="margin-top: 24px;">
@@ -227,6 +120,16 @@
         </p>
       </section>
     </main>
+
+    <div class="site-foot">
+      <!-- cocode-apps:footer:start -->
+<footer class="cocode-footer">
+  <a href="https://github.com/cocodedk/LinkQRWallet">Source code</a> ·
+  License: MIT ·
+  <a href="https://cocode.dk/">Made by Cocode (cocode.dk)</a>
+</footer>
+<!-- cocode-apps:footer:end -->
+    </div>
 
     <cocode-foot repo="cocodedk/LinkQRWallet">
       <a href="https://cocode.dk">cocode.dk</a>
