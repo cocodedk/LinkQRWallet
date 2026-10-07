@@ -1,12 +1,15 @@
 package com.cocode.linkqrwallet.ui.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cocode.linkqrwallet.R
 import com.cocode.linkqrwallet.data.LinkItem
 import com.cocode.linkqrwallet.data.LinkRepository
 import com.cocode.linkqrwallet.data.TitleFetcher
 import com.cocode.linkqrwallet.data.UrlUtils
 import com.cocode.linkqrwallet.data.UrlSafety
+import com.cocode.linkqrwallet.ui.messageRes
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +23,7 @@ data class AddLinkState(
     val title: String = "",
     val domain: String = "",
     val isFetchingTitle: Boolean = false,
-    val errorMessage: String? = null,
+    @StringRes val errorMessage: Int? = null,
     val duplicateId: Long? = null
 )
 
@@ -82,12 +85,12 @@ class AddLinkViewModel(
     fun validateAndSave(onSaved: (Long) -> Unit, onDuplicate: (Long) -> Unit) {
         val normalized = state.value.normalizedUrl
         if (normalized == null) {
-            state.value = state.value.copy(errorMessage = "Enter a valid URL.")
+            state.value = state.value.copy(errorMessage = R.string.error_enter_url)
             return
         }
         val safety = UrlSafety.check(normalized)
         if (!safety.isSafe) {
-            state.value = state.value.copy(errorMessage = safety.reason ?: "URL blocked for safety.")
+            state.value = state.value.copy(errorMessage = safety.reason.messageRes())
             return
         }
         val currentTitle = state.value.title.ifBlank { UrlUtils.domainFromUrl(normalized) }

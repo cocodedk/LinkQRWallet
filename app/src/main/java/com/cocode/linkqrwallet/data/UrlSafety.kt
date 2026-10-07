@@ -2,9 +2,22 @@ package com.cocode.linkqrwallet.data
 
 import java.net.URI
 
+/** Why a link was refused. The screens turn each one into a message the person can read. */
+enum class UnsafeReason {
+    Invalid,
+    NoScheme,
+    UnsafeScheme,
+    NotHttp,
+    NoHost,
+    Local,
+    Onion,
+    Private,
+    EncodedName
+}
+
 data class UrlSafetyResult(
     val isSafe: Boolean,
-    val reason: String? = null
+    val reason: UnsafeReason? = null
 )
 
 object UrlSafety {
@@ -15,28 +28,28 @@ object UrlSafety {
         val uri = try {
             URI(url)
         } catch (_: Exception) {
-            return UrlSafetyResult(false, "URL is not valid.")
+            return UrlSafetyResult(false, UnsafeReason.Invalid)
         }
-        val scheme = uri.scheme?.lowercase() ?: return UrlSafetyResult(false, "URL must include a scheme.")
+        val scheme = uri.scheme?.lowercase() ?: return UrlSafetyResult(false, UnsafeReason.NoScheme)
         if (scheme in blockedSchemes) {
-            return UrlSafetyResult(false, "Unsafe URL scheme blocked.")
+            return UrlSafetyResult(false, UnsafeReason.UnsafeScheme)
         }
         if (scheme != "http" && scheme != "https") {
-            return UrlSafetyResult(false, "Only http and https URLs are allowed.")
+            return UrlSafetyResult(false, UnsafeReason.NotHttp)
         }
-        val host = uri.host?.lowercase() ?: return UrlSafetyResult(false, "URL must include a host.")
+        val host = uri.host?.lowercase() ?: return UrlSafetyResult(false, UnsafeReason.NoHost)
         if (host in blockedHosts || host.endsWith(".local")) {
-            return UrlSafetyResult(false, "Local addresses are blocked.")
+            return UrlSafetyResult(false, UnsafeReason.Local)
         }
         if (host.endsWith(".onion")) {
-            return UrlSafetyResult(false, "Hidden service URLs are blocked.")
+            return UrlSafetyResult(false, UnsafeReason.Onion)
         }
         val ipv4 = parseIpv4(host)
         if (ipv4 != null && isPrivateOrReservedIpv4(ipv4)) {
-            return UrlSafetyResult(false, "Private network addresses are blocked.")
+            return UrlSafetyResult(false, UnsafeReason.Private)
         }
         if (host.startsWith("xn--")) {
-            return UrlSafetyResult(false, "Suspicious internationalized domain blocked.")
+            return UrlSafetyResult(false, UnsafeReason.EncodedName)
         }
         return UrlSafetyResult(true)
     }

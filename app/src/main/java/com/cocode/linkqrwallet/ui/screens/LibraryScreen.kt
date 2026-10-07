@@ -1,7 +1,5 @@
 package com.cocode.linkqrwallet.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +22,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -38,17 +35,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cocode.linkqrwallet.R
-import com.cocode.linkqrwallet.data.LinkItem
 import com.cocode.linkqrwallet.data.SortOption
-import com.cocode.linkqrwallet.ui.components.rememberQrBitmap
 import com.cocode.linkqrwallet.ui.viewmodel.AppViewModelFactory
 import com.cocode.linkqrwallet.ui.viewmodel.LibraryViewModel
-import java.text.DateFormat
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,20 +70,20 @@ fun LibraryScreen(
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.size(8.dp))
-                        Text("Link QR Wallet")
+                        Text(stringResource(R.string.app_name))
                     }
                 },
                 actions = {
                     IconButton(onClick = { showSortMenu = true }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Sort,
-                            contentDescription = "Sort"
+                            contentDescription = stringResource(R.string.library_sort_description)
                         )
                     }
                     IconButton(onClick = onAbout) {
                         Icon(
                             imageVector = Icons.Filled.Info,
-                            contentDescription = "About"
+                            contentDescription = stringResource(R.string.about_title)
                         )
                     }
                     DropdownMenu(
@@ -99,7 +92,7 @@ fun LibraryScreen(
                     ) {
                         SortOption.values().forEach { option ->
                             DropdownMenuItem(
-                                text = { Text(option.label) },
+                                text = { Text(stringResource(option.label)) },
                                 onClick = {
                                     viewModel.updateSort(option)
                                     showSortMenu = false
@@ -115,7 +108,7 @@ fun LibraryScreen(
                 FloatingActionButton(onClick = { showFabMenu = true }) {
                     Icon(
                         imageVector = Icons.Filled.Add,
-                        contentDescription = "Add options"
+                        contentDescription = stringResource(R.string.library_add_description)
                     )
                 }
                 DropdownMenu(
@@ -123,14 +116,14 @@ fun LibraryScreen(
                     onDismissRequest = { showFabMenu = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Add Link") },
+                        text = { Text(stringResource(R.string.action_add_link)) },
                         onClick = {
                             showFabMenu = false
                             onAdd()
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Scan QR") },
+                        text = { Text(stringResource(R.string.action_scan_qr)) },
                         onClick = {
                             showFabMenu = false
                             onScan()
@@ -150,7 +143,7 @@ fun LibraryScreen(
                 value = query,
                 onValueChange = viewModel::updateQuery,
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Search") }
+                label = { Text(stringResource(R.string.library_search)) }
             )
             Spacer(modifier = Modifier.height(12.dp))
             if (links.isEmpty()) {
@@ -165,62 +158,5 @@ fun LibraryScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun LinkRow(item: LinkItem, onClick: () -> Unit) {
-    val qrBitmap = rememberQrBitmap(item.url, 120)
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            bitmap = qrBitmap,
-            contentDescription = "QR code",
-            modifier = Modifier.size(60.dp)
-        )
-        Spacer(modifier = Modifier.size(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = item.title,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = item.domain,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        Text(
-            text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(item.createdAt)),
-            style = MaterialTheme.typography.bodySmall
-        )
-    }
-}
-
-@Composable
-private fun EmptyLibraryState(sortOption: SortOption) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "No links yet",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Add your first URL and start building your wallet.",
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Sorting by ${sortOption.label}",
-            style = MaterialTheme.typography.bodySmall
-        )
     }
 }

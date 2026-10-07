@@ -1,5 +1,6 @@
 package com.cocode.linkqrwallet.ui.screens
 
+import androidx.annotation.StringRes
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.cocode.linkqrwallet.R
 
 /** The body shown while camera permission has not been granted yet. */
 @Composable
@@ -24,12 +27,12 @@ internal fun CameraPermissionRequest(onRequestPermission: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Camera permission is needed to scan QR codes.",
+            text = stringResource(R.string.scan_permission_needed),
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = onRequestPermission) {
-            Text("Grant permission")
+            Text(stringResource(R.string.scan_grant_permission))
         }
     }
 }
@@ -41,7 +44,7 @@ internal fun CameraPermissionRequest(onRequestPermission: () -> Unit) {
  */
 @Composable
 internal fun QrPreviewOverlay(
-    errorMessage: String?,
+    @StringRes errorMessage: Int?,
     onPreviewViewCreated: (PreviewView) -> Unit
 ) {
     Box(
@@ -59,7 +62,7 @@ internal fun QrPreviewOverlay(
             modifier = Modifier.fillMaxSize()
         )
         Text(
-            text = "Align the QR code in the frame",
+            text = stringResource(R.string.scan_hint),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -67,7 +70,7 @@ internal fun QrPreviewOverlay(
         )
         if (errorMessage != null) {
             Text(
-                text = errorMessage,
+                text = stringResource(errorMessage),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
