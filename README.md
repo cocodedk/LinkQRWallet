@@ -10,7 +10,7 @@ Link QR Wallet is an Android app that saves your web links on your phone and sho
 <!-- cocode-apps:install:end -->
 
 ## Features
-- Add a link by typing or pasting it, or by sharing it from another app. The app looks up the page title for you.
+- Add a link by typing or pasting it, or by sharing it from another app. If you leave the title empty, the app looks up the page title after you save.
 - See each link as a QR code and share the QR code as a picture.
 - Scan a QR code to save the link inside it.
 - Search by title, web address or domain, and sort by title, domain or date added.
@@ -18,7 +18,7 @@ Link QR Wallet is an Android app that saves your web links on your phone and sho
 - Browse saved links and show their QR codes without an internet connection.
 
 ## Privacy
-Your saved links stay on your phone. The app has no account, no ads and no tracking. It uses the camera only to scan QR codes, and the internet only to look up page titles. As soon as you type or paste a web address, the app asks that website for its page title, even before you save the link, and the website can see your phone's IP address. If Android backup is turned on, Android may include your saved links in your own backup. Read the [privacy policy](https://qr.cocode.dk/privacy/).
+Your saved links stay on your phone. The app has no account, no ads and no tracking. It uses the camera only to scan QR codes, and the internet only to look up page titles. When you save a link and have not typed a title, the app opens that web address once to read the page's title. Nothing is sent to any website before you save. The website can see your phone's IP address. If Android backup is turned on, Android may include your saved links in your own backup. Read the [privacy policy](https://qr.cocode.dk/privacy/).
 
 ## Build
 ```bash
