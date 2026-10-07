@@ -1,5 +1,6 @@
 package com.cocode.linkqrwallet.data
 
+import java.net.InetAddress
 import java.net.URI
 
 /** Why a link was refused. The screens turn each one into a message the person can read. */
@@ -45,13 +46,23 @@ object UrlSafety {
             return UrlSafetyResult(false, UnsafeReason.Onion)
         }
         val ipv4 = parseIpv4(host)
-        if (ipv4 != null && isPrivateOrReservedIpv4(ipv4)) {
+        if (ipv4 != null && AddressRules.isBlockedIpv4(ipv4)) {
+            return UrlSafetyResult(false, UnsafeReason.Private)
+        }
+        if (host.startsWith("[") && host.endsWith("]") && isBlockedIpv6Literal(host)) {
             return UrlSafetyResult(false, UnsafeReason.Private)
         }
         if (host.startsWith("xn--")) {
             return UrlSafetyResult(false, UnsafeReason.EncodedName)
         }
         return UrlSafetyResult(true)
+    }
+
+    /** [host] is an IPv6 address in brackets, which only a valid numeric address can be, so nothing is looked up. */
+    private fun isBlockedIpv6Literal(host: String): Boolean = try {
+        AddressRules.isBlocked(InetAddress.getByName(host.substring(1, host.length - 1)))
+    } catch (_: Exception) {
+        true
     }
 
     private fun parseIpv4(host: String): IntArray? {
@@ -66,20 +77,5 @@ object UrlSafety {
             bytes[i] = value
         }
         return bytes
-    }
-
-    private fun isPrivateOrReservedIpv4(bytes: IntArray): Boolean {
-        val b0 = bytes[0]
-        val b1 = bytes[1]
-        return when {
-            b0 == 10 -> true
-            b0 == 127 -> true
-            b0 == 0 -> true
-            b0 == 169 && b1 == 254 -> true
-            b0 == 192 && b1 == 168 -> true
-            b0 == 172 && b1 in 16..31 -> true
-            b0 >= 224 -> true
-            else -> false
-        }
     }
 }

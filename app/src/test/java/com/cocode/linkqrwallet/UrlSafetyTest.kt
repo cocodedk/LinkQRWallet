@@ -48,4 +48,21 @@ class UrlSafetyTest {
             urls.map { UrlSafety.check(it).reason }
         )
     }
+
+    @Test
+    fun blocksLocalIpv6Addresses() {
+        val urls = listOf(
+            "http://[::1]/",
+            "http://[fd00::1]/",
+            "http://[fc00::1]:8080/",
+            "http://[fe80::1]/",
+            "http://[::ffff:10.0.0.1]/"
+        )
+        urls.forEach { assertEquals(it, UnsafeReason.Private, UrlSafety.check(it).reason) }
+    }
+
+    @Test
+    fun allowsPublicIpv6Addresses() {
+        assertTrue(UrlSafety.check("https://[2606:4700:4700::1111]/").isSafe)
+    }
 }
