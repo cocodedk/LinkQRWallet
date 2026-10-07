@@ -20,6 +20,9 @@ class LinkRepository(private val dao: LinkItemDao) {
 
     suspend fun delete(item: LinkItem) = dao.delete(item)
 
+    suspend fun replaceTitle(id: Long, expected: String, title: String) =
+        dao.replaceTitle(id, expected, title)
+
     private fun buildQuery(query: String, sortOption: SortOption): SupportSQLiteQuery {
         val like = "%${query.trim().lowercase()}%"
         val sql = """

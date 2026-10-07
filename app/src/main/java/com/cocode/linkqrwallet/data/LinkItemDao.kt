@@ -29,4 +29,8 @@ interface LinkItemDao {
 
     @Delete
     suspend fun delete(item: LinkItem)
+
+    /** Swaps in a fetched title only while the saved title is still [expected], so a title the person typed is never replaced. */
+    @Query("UPDATE link_items SET title = :title WHERE id = :id AND title = :expected")
+    suspend fun replaceTitle(id: Long, expected: String, title: String)
 }
