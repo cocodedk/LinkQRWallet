@@ -7,8 +7,6 @@ import com.cocode.linkqrwallet.data.LinkRepository
 import com.cocode.linkqrwallet.data.TitleFetcher
 import com.cocode.linkqrwallet.data.UrlUtils
 import com.cocode.linkqrwallet.data.UrlSafety
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,8 +29,6 @@ class AddLinkViewModel(
     private val state = MutableStateFlow(AddLinkState())
     val uiState: StateFlow<AddLinkState> = state.asStateFlow()
 
-    private var fetchJob: Job? = null
-
     fun updateUrl(value: String) {
         val normalized = UrlUtils.normalizeUrl(value)
         val domain = normalized?.let { UrlUtils.domainFromUrl(it) } ?: ""
@@ -43,22 +39,13 @@ class AddLinkViewModel(
             errorMessage = null,
             duplicateId = null
         )
-        scheduleTitleFetch(normalized)
     }
 
     fun updateTitle(value: String) {
         state.value = state.value.copy(title = value)
     }
 
-    private fun scheduleTitleFetch(normalized: String?) {
-        fetchJob?.cancel()
-        if (normalized == null) return
-        fetchJob = viewModelScope.launch {
-            delay(400)
-            fetchTitle(normalized)
-        }
-    }
-
+    // The only network call in the app, and it runs only when the user taps "Fetch Title".
     fun fetchTitle(url: String) {
         if (url.isBlank()) return
         viewModelScope.launch {

@@ -4,11 +4,11 @@
 
 ## What it does
 
-Link QR Wallet lets users save links as QR codes for quick access. Add a URL and the app auto-fetches the page title; a QR code is generated and stored locally. Users can search and sort their library, scan existing QR codes to import them, and share QR images. Everything is stored offline — no account or cloud sync required.
+Link QR Wallet lets users save links as QR codes for quick access. Add a URL and tap Fetch Title to fill in the page title; a QR code is generated and stored locally. Users can search and sort their library, scan existing QR codes to import them, and share QR images. Everything is stored offline — no account or cloud sync required.
 
 ## Key features
 
-- Add links with auto-fetched page titles
+- Add links with page titles fetched on request
 - Generate and display QR codes for any URL
 - QR scanner to import existing codes (CameraX + ML Kit)
 - Search and sort by title, domain, or date

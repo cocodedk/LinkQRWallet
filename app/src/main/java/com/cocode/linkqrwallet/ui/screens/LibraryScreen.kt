@@ -153,7 +153,9 @@ fun LibraryScreen(
                 label = { Text("Search") }
             )
             Spacer(modifier = Modifier.height(12.dp))
-            if (links.isEmpty()) {
+            if (links.isEmpty() && query.isNotBlank()) {
+                NoMatchesState(query)
+            } else if (links.isEmpty()) {
                 EmptyLibraryState(sortOption)
             } else {
                 LazyColumn(
@@ -198,28 +200,6 @@ private fun LinkRow(item: LinkItem, onClick: () -> Unit) {
         }
         Text(
             text = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(item.createdAt)),
-            style = MaterialTheme.typography.bodySmall
-        )
-    }
-}
-
-@Composable
-private fun EmptyLibraryState(sortOption: SortOption) {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "No links yet",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Add your first URL and start building your wallet.",
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Sorting by ${sortOption.label}",
             style = MaterialTheme.typography.bodySmall
         )
     }

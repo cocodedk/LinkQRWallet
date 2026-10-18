@@ -1,0 +1,1 @@
+Searching with no matches now says "No matches" instead of "No links yet". Page titles are fetched only when you tap Fetch Title, never while typing, scanning or sharing a link.
