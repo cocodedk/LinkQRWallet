@@ -10,7 +10,7 @@ Link QR Wallet is a personal Android app that turns URLs into QR codes and store
 <!-- cocode-apps:install:end -->
 
 ## Features
-- Add links, auto-fetch page titles, and generate QR codes
+- Add links, fetch page titles on request, and generate QR codes
 - Search and sort by title, domain, or date
 - QR scanner to import existing codes
 - Share QR images and open links quickly
